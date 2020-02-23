@@ -140,6 +140,12 @@ function isShadow(intersected_object, shadow_ray):
 5.             return true
 6. return false
 ```
+
+## Writing scene to PNG file
+I used thwe basic PNG library to save the scene as a PNG image.
+PNG library can be install with this command:
+`sudo apt-get install libpng-dev`
+
 ## Results
 Lets look at the results of my implementation.
 
