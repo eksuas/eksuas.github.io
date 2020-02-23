@@ -1,5 +1,8 @@
-# Advance Ray Tracer
-## Welcome to GitHub Pages
+In computer graphics, ray tracing is a rendering technique for generating an image by tracing the path of light as pixels in an image plane and simulating the effects of its encounters with virtual objects. (from Wikipedia)
+In this serial, I'll share my experiences while developing an Advanced Ray Tracer.
+
+1. Basic Ray Tracer [editor on GitHub](page1.md) include diffuse shading, specular (Blinn-Phong) shading, and ambient shading
+
 
 You can use the [editor on GitHub](https://github.com/eksuas/eksuas.github.io/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
 
