@@ -21,7 +21,6 @@ I will employ custom XML files that define the camera and scene properties as an
             <ImageName>simple.png</ImageName>
         </Camera>
     </Cameras>
-
     <Lights>
         <AmbientLight>25 25 25</AmbientLight>
         <PointLight id="1">
@@ -29,7 +28,6 @@ I will employ custom XML files that define the camera and scene properties as an
             <Intensity>1000 1000 1000</Intensity>
         </PointLight>
     </Lights>
-
     <Materials>
         <Material id="1">
             <AmbientReflectance>1 1 1</AmbientReflectance>
@@ -38,7 +36,6 @@ I will employ custom XML files that define the camera and scene properties as an
             <PhongExponent>1</PhongExponent>
         </Material>
     </Materials>
-
     <VertexData>
         -0.5 0.5 -2
         -0.5 -0.5 -2
@@ -49,7 +46,6 @@ I will employ custom XML files that define the camera and scene properties as an
         0.875 1 -2
         -0.875 1 -2
     </VertexData>
-
     <Objects>
         <Mesh id="1">
             <Material>1</Material>
