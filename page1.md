@@ -4,8 +4,8 @@ Our very beginning ray tracer will support ray-triangle and ray-sphere intersect
 
 ## Input
 I will employ custom XML files that define the camera and scene properties as an input of the Ray Tracer.
-<details>
- <summary>Example XML file</summary>
+<details><summary>Example XML file</summary>
+<pre>
 <Scene>
     
     <ShadowRayEpsilon>1e-3</ShadowRayEpsilon>
@@ -75,7 +75,7 @@ I will employ custom XML files that define the camera and scene properties as an
         </Sphere>
     </Objects>
 </Scene>
-
+</pre>
 </details>
 
 The XML file is generally self-explanatory. But some points may not be clear: the "Mesh" element defines a collection of triangles using an index-based representation. Indices are 1-based (index 1 represents the first vertex in your vertex list). In order to parse XML file, I use TinyXML lib that parses XML file as a tree and you can reach attributes by preserving nested relationships.
