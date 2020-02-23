@@ -6,6 +6,7 @@ Our very beginning ray tracer will support ray-triangle and ray-sphere intersect
 I will employ custom XML files that define the camera and scene properties as an input of the Ray Tracer.
 <details><summary>Example XML file</summary>
 <p>
+```Python
 <Scene>
     
     <ShadowRayEpsilon>1e-3</ShadowRayEpsilon>
@@ -75,6 +76,7 @@ I will employ custom XML files that define the camera and scene properties as an
         </Sphere>
     </Objects>
 </Scene>
+```
 <p>
 </details>
 
