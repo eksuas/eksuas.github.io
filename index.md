@@ -7,4 +7,5 @@ Sections:
 1. [Basic Ray Tracer](page1.md) includes diffuse shading, specular (Blinn-Phong) shading, and ambient shading
 
 My development environment is Ubuntu18.4
+
 Required Libraries are libpng-dev and libtinyxml-dev.
