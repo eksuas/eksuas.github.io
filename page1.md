@@ -3,12 +3,14 @@
 Our very beginning ray tracer will support ray-triangle and ray-sphere intersections with a simple perspective camera model and simple shading models. These include diffuse shading, specular (Blinn-Phong) shading, and ambient shading.
 
 ## Input
-I will employ custom XML files that define the camera and scene properties as an input of the Ray Tracer. Example XML file:
-```markdown
+I will employ custom XML files that define the camera and scene properties as an input of the Ray Tracer.
+<details>
+ <summary>Example XML file</summary>
 <Scene>
-    <BackgroundColor>0 0 0</BackgroundColor>
-
+    
     <ShadowRayEpsilon>1e-3</ShadowRayEpsilon>
+    
+    <BackgroundColor>0 0 0</BackgroundColor>
 
     <IntersectionTestEpsilon>1e-6</IntersectionTestEpsilon>
 
@@ -73,7 +75,8 @@ I will employ custom XML files that define the camera and scene properties as an
         </Sphere>
     </Objects>
 </Scene>
-```
+
+</details>
 
 The XML file is generally self-explanatory. But some points may not be clear: the "Mesh" element defines a collection of triangles using an index-based representation. Indices are 1-based (index 1 represents the first vertex in your vertex list). In order to parse XML file, I use TinyXML lib that parses XML file as a tree and you can reach attributes by preserving nested relationships.
 
