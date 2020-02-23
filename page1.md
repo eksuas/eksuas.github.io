@@ -1,8 +1,8 @@
-## 1. Basic Ray Tracer
+# 1. Basic Ray Tracer
 
 Our very beginning ray tracer will support ray-triangle and ray-sphere intersections with a simple perspective camera model and simple shading models. These include diffuse shading, specular (Blinn-Phong) shading, and ambient shading.
 
-### Input
+## Input
 I will employ custom XML files that define the camera and scene properties as an input of the Ray Tracer. Example XML file:
 ```markdown
 <Scene>
@@ -80,10 +80,10 @@ The XML file is generally self-explanatory. But some points may not be clear: th
 TinyXML can be install with this command:
 `sudo apt-get install libtinyxml-dev`
 
-### Code Design
+## Code Design
 Most probably, I spent the most time on code design. It is very important to define your class and relationship well before coding the tracer. I follow the nested XML features and define classes for almost each attributes.
 
-### Main algorithm
+## Algorithm
 ```markdown
 function main:
 1. parse XML file and load object
@@ -140,3 +140,10 @@ function isShadow(intersected_object, shadow_ray):
 5.             return true
 6. return false
 ```
+## Results
+Lets look at the results of my implementation.
+![Image](results/hw1/simple.png)
+![Image](results/hw1/cornellbox.png)
+![Image](results/hw1/spheres.png)
+![Image](results/hw1/bunny.png)
+![Image](results/hw1/scienceTree.png)
