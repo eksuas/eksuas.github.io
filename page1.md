@@ -150,33 +150,32 @@ PNG library can be install with this command:
 ## Results
 Lets look at the results of my implementation.
 
-
+### Simple.xml
 <p align="left"><img height="500" src="results/hw1/simple.png"></p>
-This example includes all types of basic objects (triangle and sphere intersections). All reflectance code of materials are the same, white. Thus, resulting image is very simple and show us if intersection checking is true or not. We may not validate the shading computation just by this example. In addition, any object does not cause to cast a shadow by being in front of the light. Thus, we may not check the shadow test.
-
-I did not encounter any difficulty while getting this result.
+This example includes all types of basic objects (triangle and sphere intersections). All reflectance code of materials are the same, white. Thus, resulting image is very simple and show us if intersection checking is true or not. We may not validate the shading computation just by this example. In addition, any object does not cause to cast a shadow by being in front of the light. Thus, we may not check the shadow test. I did not encounter any difficulty while getting this result.
 
 Real running time is 0m0,080s
 
-
+### Cornellbox.xml
 <p align="left"><img height="500" src="results/hw1/cornellbox.png"></p>
 This example includes meshes and spheres with various materials. It is useful for shadow and shading testing. This example helps me to find a bug on shadow test. Before this example, I didn't check whether the shadow intersection distance is larger than one. So, the shadow rays intersect upper objects even if they do not place between the current object and light source.
 
 Real running time is 0m0,232s
 
-
+### Spheres.xml
 <p align="left"><img height="500" src="results/hw1/spheres.png"></p>
 This example mostly focuses on spheres and phong shading. There are various and bright materials which show the phong shading very clearly. The example also good to see the shadows casted bottom of the spheres. But light placed to top of the space. By the way, previous bug may not detected in the example (the light does not place between any two objects).
 
 Real running time is 0m0,122s
 
-
+### Bunny.xml
 <p align="left"><img height="500" src="results/hw1/bunny.png"></p>
 Real running time is 0m19,812s
 
-
+### ScienceTree.xml
 <p align="left"><img height="500" src="results/hw1/scienceTree.png"></p>
 Real running time is 0m37,879s
 
+The last two examples are more challenging examples that include many triangles and takes much more time.
 
-The last two examples are more challenging examples that include many triangles and takes much more time. I aim to decrease these running times in later improvements :D
+I aim to decrease these running times in later improvements :D
