@@ -142,6 +142,10 @@ function isShadow(intersected_object, shadow_ray):
 ```
 ## Results
 Lets look at the results of my implementation.
+
+<p align="center">
+  <img width="460" height="300" src="results/hw1/simple.png">
+</p>
 ![Image](results/hw1/simple.png)
 ![Image](results/hw1/cornellbox.png)
 ![Image](results/hw1/spheres.png)
