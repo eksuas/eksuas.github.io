@@ -108,9 +108,9 @@ function fresnel(ray, normal):
 3.  if type is conductor:
 4.      compute cosi (alpha1)
 5.      base <- square of refraction index + square of absorption index
-6.      sub <- 2 \* refraction index \* cosi
+6.      sub <- 2 &ast; refraction index &ast; cosi
 7.      Rs <- (base - sub + square of cosi) / (base + sub + square of cosi)
-8.      Rp <- (base\*square of cosi - sub+1) / (base\*square of cosi + sub+1)
+8.      Rp <- (base&ast;square of cosi - sub+1) / (base&ast;square of cosi + sub+1)
 9.      return (Rs + Rp) / 2
 10. if type is dielectric:
 11.     compute cosi (alpha1)
@@ -120,9 +120,9 @@ function fresnel(ray, normal):
 15.     if the total internal reflection case is exist:
 16.         return 1
 17.     compute cost (theta)
-18.     Rs <- (nt \* cosi - ni \* cost) / (nt \* cosi + ni \* cost)
-19.     Rp <- (ni \* cosi - nt \* cost) / (ni \* cosi + nt \* cost)
-20.     return (Rs \* Rs + Rp \* Rp) / 2
+18.     Rs <- (nt &ast; cosi - ni &ast; cost) / (nt &ast; cosi + ni &ast; cost)
+19.     Rp <- (ni &ast; cosi - nt &ast; cost) / (ni &ast; cosi + nt &ast; cost)
+20.     return (Rs &ast; Rs + Rp &ast; Rp) / 2
 ```
 
 Therefore, the final color of hit point can be calculated according to the material type.
