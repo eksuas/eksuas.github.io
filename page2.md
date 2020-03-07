@@ -120,7 +120,7 @@ The bounding box of ScienceTree scene is given below:
 The bounding box of Bunny scene:
 <p float="left">
   <img src="results/hw2/process/bunny_boundingboxes.png" width="400" />
-  <img src="results/hw2/process/bunny.png" width="400" />
+  <img src="results/hw2/bunny.png" width="400" />
 </p>
 
 
