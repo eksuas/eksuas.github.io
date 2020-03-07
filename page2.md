@@ -67,7 +67,7 @@ Note that ray directions should be an unit vector. In the first results of code,
 <p align="left"><img height="500" src="results/hw2/process/refraction+reflection+beers.png"></p>
 
 After fixing unit ray direction problem, I get below result:
-<p align="left"><img height="500" src="results/hw2/process/refraction+cornellbox_recursive_wrong+beers.png"></p>
+<p align="left"><img height="500" src="results/hw2/process/cornellbox_recursive_wrong.png"></p>
 
 In searching for the source of the problem, I checked the Total Internal Reflection case, and I realized that ray never comes in this situation. But, my ray directions were correct. Then, I figured out that rays coming from the inside of the object could not intersect with the same object because of my sphere intersection test.
 
@@ -85,7 +85,7 @@ if t2>ep:
 return -1
 ```
 
-One may ask how to know how much light is transmitted vs how much light is reflected? In order to decide it, I used the Fresnel effect. It is a coefficient for reflection and refraction calculations.
+After that point, one may ask how to know how much light is transmitted vs how much light is reflected? In order to decide it, I used the Fresnel effect. It is a coefficient for reflection and refraction calculations.
 
 ```markdown
 function fresnel(ray, normal):
@@ -119,8 +119,8 @@ The bounding box of ScienceTree scene is given below:
 
 The bounding box of Bunny scene:
 <p float="left">
-  <img src="results/hw2/bunny_boundingboxes.png" height="500" />
-  <img src="results/hw2/process/bunny.png" height="500" />
+  <img src="results/hw2/bunny_boundingboxes.png" height="400" />
+  <img src="results/hw2/process/bunny.png" height="400" />
 </p>
 
 
