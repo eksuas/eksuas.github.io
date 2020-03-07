@@ -55,80 +55,26 @@ In reflection and refraction, light can pass through the object, a phenomenon we
 
 ```markdown
 function reflection(ray, hit_point, normal):
-1. compute direction of reflected ray by using incident ray and normal vector
-2. compute origin of reflected ray on hit_point with a bias (through normal vector)
-3. call raytracer for reflected ray
+
 ```
 
 ```markdown
 function refraction(ray, hit_point, normal, refractionInd):
-1.  if cos alpha1 is less than zero:
-2.  compute cos alpha1
-3.      set outside
-4.  if incident ray comes from outside to inside:
-5.      reverse the direction of cos alpha1
-6.  else:
-7.      swap the refraction indices of outside and inside
-8.      reverse the normal vector
-9.  if one - square(sin alpha2) is less than zero:
-10.     set total internal reflection case
-11.     return zero  
-12. compute refracted ray by using incident ray, refraction indices and alphas
-13. call raytracer for refracted ray     
+
 ```
 
 One may ask how to know how much light is transmitted vs how much light is reflected? In order to decide it, I used the Fresnel effect. It is a coefficient for reflection and refraction calculations.
 
 ```markdown
 function fresnel(ray, normal):
-1.  if type is mirror:
-2.      return 1
-3.  if type is conductor:
-4.      compute cosi (alpha1)
-5.      base <- square of refraction index + square of absorption index
-6.      sub <- 2 * refraction index * cosi
-7.      Rs <- (base - sub + square of cosi) / (base + sub + square of cosi)
-8.      Rp <- (base*square of cosi - sub+1) / (base*square of cosi + sub+1)
-9.      return (Rs + Rp) / 2
-10. if type is dielectric:
-11.     compute cosi (alpha1)
-12.     if cosi is larger than zero (from inside to outside):
-13.         swap the refraction indices (ni and nt)
-14.     compute sini by using Snell's law
-15.     if the total internal reflection case is exist:
-16.         return 1
-17.     compute cost (theta)
-18.     Rs <- (nt * cosi - ni * cost) / (nt * cosi + ni * cost)
-19.     Rp <- (ni * cosi - nt * cost) / (ni * cosi + nt * cost)
-20.     return (Rs * Rs + Rp * Rp) / 2
+
 ```
 
 Therefore, the final color of hit point can be calculated according to the material type.
 
 ```markdown
 function rayTracer(ray):
-1.  find the closest intersected object and distance to it
-2.  if there is intersection:
-3.      compute hit_point
-4.      compute normal if object is a sphere
-5.      color <- shading(intersected_object, ray, hit_point, normal)
-6.      if material type is mirror:
-7.          color += mirror reflection * reflection(ray, hit_point, normal)
-8.      if material type is conductor:
-9.          fr <- fresnel(ray, normal)
-10.         reflectionColor <- reflection(ray, hit_point, normal)
-11.         color += mirror reflection * reflectionColor * fr
-12.     if material type is dielectric:
-13.         fr <- fresnel(ray, normal)
-14.         if not a case of total internal reflection:
-15.             refractionColor <- refraction(ray, hit_point, normal, refractionInd)
-16.             absorbance <- material->absorptionCoef * (-distance)
-17.             transparency <- expf(absorbance)
-18.         reflectionColor <- reflection(ray, hit_point, normal)
-19.         color += transparency * (reflectionColor*fr + refractionColor*(1-fr))
-20. else:
-21.     color <- zero
-22. return color
+
 ```
 
 Note that the final refraction color is multiplied with transparency factor. It comes from the Beer's Law.
@@ -143,14 +89,7 @@ I added new class, BoundingBox having its own intersection and union methods and
 ## Algorithm
 ```markdown
 function constructBVH(object_list, split_axis):
-1. create a new node from object_list
-2. compute its bounding box by using its own objects
-3. if object_list size is larger than maxNodeInLeaf:
-4.     get median object center of the object_list according to split_axis
-5.     divide object_list into low_list and high_list by comparing median
-6.     node->low <- constructBVH(low_list, (split_axis+1) % 3)
-7.     node->high <- constructBVH(high_list, (split_axis+1) % 3)
-8. return node
+
 ```
 
 ## Results
