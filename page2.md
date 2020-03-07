@@ -191,7 +191,7 @@ Scene is created in 1 sec
 Before acceleration: Real running time is
 
 ### chinese_dragon.xml
-<p align="left"><img height="500" src="results/hw1/scienceTree.png"></p>
+<p align="left"><img height="500" src="results/hw2/chinese_dragon.png"></p>
 
 After acceleration:
 XML file is parsed in 375 sec
@@ -200,7 +200,7 @@ Preprocessing is finished in 1 sec
 Scene is created in 2 sec
 
 ### other_dragon.xml
-<p align="left"><img height="500" src="results/hw1/scienceTree.png"></p>
+<p align="left"><img height="500" src="results/hw2/other_dragon.png"></p>
 
 After acceleration:
 XML file is parsed in 1 sec
