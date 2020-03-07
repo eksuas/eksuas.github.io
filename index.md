@@ -8,6 +8,7 @@ Sections:
 
 1. [Basic Ray Tracer](page1.md) includes diffuse shading, specular (Blinn-Phong) shading, and ambient shading
 
+1. [Reflection and Refraction with Ray Tracer Acceleration](page2.md) includes reflection and refraction shadings with Fresnel coefficient, Snell's and Beer's laws. In addition, ray tracer is accelerated via Bounding Volume Hierarchy (BVH) algorithm. 
 
 My development environment is Ubuntu18.4
 
