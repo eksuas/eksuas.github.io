@@ -159,53 +159,66 @@ Lets look at the results of my implementation.
 ### Spheres.xml
 <p align="left"><img height="500" src="results/hw2/spheres.png"></p>
 
+```markdown
 Before acceleration: Real running time is 0m0,122s
 After acceleration:
 XML file is parsed in 0 sec
 Maximum BVH depth is 1
 Preprocessing is finished in 0 sec
 Scene is created in 0 sec
+```
 
 ### cornellbox_recursive.xml
 <p align="left"><img height="500" src="results/hw2/cornellbox_recursive.png"></p>
 
+```markdown
 Before acceleration: Real running time is 0m0,232s
 After acceleration:
 XML file is parsed in 0 sec
 Maximum BVH depth is 2
 Preprocessing is finished in 0 sec
 Scene is created in 1 sec
+```
 
 ### ScienceTree.xml
 <p align="left"><img height="500" src="results/hw2/scienceTree.png"></p>
 
+```markdown
 Before acceleration: Real running time is 1m26,100s
 After acceleration:
 XML file is parsed in 0 sec
 Maximum BVH depth is 2
 Preprocessing is finished in 0 sec
 Scene is created in 1 sec
+```
 
 ### Bunny.xml
 <p align="left"><img height="500" src="results/hw2/bunny.png"></p>
+
+```markdown
 Before acceleration: Real running time is
+```
 
 ### chinese_dragon.xml
 <p align="left"><img height="500" src="results/hw2/chinese_dragon.png"></p>
 
+```markdown
 After acceleration:
 XML file is parsed in 375 sec
 Maximum BVH depth is 19
 Preprocessing is finished in 1 sec
 Scene is created in 2 sec
+```
 
 ### other_dragon.xml
 <p align="left"><img height="500" src="results/hw2/other_dragon.png"></p>
 
+```markdown
 After acceleration:
 XML file is parsed in 1 sec
 Maximum BVH depth is 19
 Preprocessing is finished in 2 sec
 Scene is created in 9 sec
+```
 
 The last two examples are more challenging examples that include many triangles and takes much more time. I could not get a result without BVH acceleration.
