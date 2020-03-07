@@ -54,14 +54,14 @@ In reflection and refraction, light can pass through the object, a phenomenon we
 <p align="left"><img src="results/hw2/example.png"></p>
 
 ```markdown
-**function reflection(ray, hit_point, normal):**
+function reflection(ray, hit_point, normal):
 1. compute direction of reflected ray by using incident ray and normal vector
 2. compute origin of reflected ray on hit_point with a bias (through normal vector)
 3. call raytracer for reflected ray
 ```
 
 ```markdown
-**function refraction(ray, hit_point, normal, refractionInd):**
+function refraction(ray, hit_point, normal, refractionInd):
 1.  if cos alpha1 is less than zero:
 2.  compute cos alpha1
 3.      set outside
@@ -102,15 +102,15 @@ return -1
 After that point, one may ask how to know how much light is transmitted vs how much light is reflected? In order to decide it, I used the Fresnel effect. It is a coefficient for reflection and refraction calculations.
 
 ```markdown
-**function fresnel(ray, normal):**
+function fresnel(ray, normal):
 1.  if type is mirror:
 2.      return 1
 3.  if type is conductor:
 4.      compute cosi (alpha1)
 5.      base <- square of refraction index + square of absorption index
-6.      sub <- 2 ``\`` refraction index ``\`` cosi
+6.      sub <- 2 * refraction index * cosi
 7.      Rs <- (base - sub + square of cosi) / (base + sub + square of cosi)
-8.      Rp <- (base``*``square of cosi - sub+1) / (base``*``square of cosi + sub+1)
+8.      Rp <- (base*square of cosi - sub+1) / (base*square of cosi + sub+1)
 9.      return (Rs + Rp) / 2
 10. if type is dielectric:
 11.     compute cosi (alpha1)
@@ -120,15 +120,15 @@ After that point, one may ask how to know how much light is transmitted vs how m
 15.     if the total internal reflection case is exist:
 16.         return 1
 17.     compute cost (theta)
-18.     Rs <- (nt ``*`` cosi - ni ``*`` cost) / (nt ``*`` cosi + ni ``*`` cost)
-19.     Rp <- (ni ``*`` cosi - nt ``*`` cost) / (ni ``*`` cosi + nt ``*`` cost)
-20.     return (Rs ``*`` Rs + Rp ``*`` Rp) / 2
+18.     Rs <- (nt * cosi - ni * cost) / (nt * cosi + ni * cost)
+19.     Rp <- (ni * cosi - nt * cost) / (ni * cosi + nt * cost)
+20.     return (Rs * Rs + Rp * Rp) / 2
 ```
 
 Therefore, the final color of hit point can be calculated according to the material type.
 
 ```markdown
-**function rayTracer(ray):**
+function rayTracer(ray):
 
 ```
 
@@ -143,7 +143,7 @@ I added a new class, BoundingBox having its own intersection and union methods a
 
 ## Algorithm
 ```markdown
-**function constructBVH(object_list, split_axis):**
+function constructBVH(object_list, split_axis):
 1. create a new node from object_list
 2. compute its bounding box by using its own objects
 3. if object_list size is larger than maxNodeInLeaf:
