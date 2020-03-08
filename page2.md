@@ -174,10 +174,10 @@ function constructBVH(object_list, split_axis):
 8. return node
 ```
 
-The bounding box of ScienceTree scene is given below:
+The bounding boxes of the ScienceTree scene is given below:
 <p align="left"><img height="500" src="results/hw2/process/scienceTree_boundingboxes.png"></p>
 
-The bounding box of Bunny scene:
+The bounding boxes of the Bunny scene:
 <p float="left">
   <img src="results/hw2/process/bunny_boundingboxes.png" width="410" />
   <img src="results/hw2/bunny.png" width="410" />
