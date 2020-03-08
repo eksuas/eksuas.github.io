@@ -44,7 +44,7 @@ For these purposes, the input XML files include new attributes. Some of new comi
 In addition, this section includes an implementation of ray tracing acceleration method. By this way, huge meshes can be traced. So, we need huge meshes. But, as known, more complex meshes can be found in ply file format on the web. So, our XML file includes a ply filename as a mesh faces, as well. This file includes mesh vertices and faces with vertex indices. The normal vectors can be found in ply files, as well.
 
 ## Reading meshes from the PLY file
-In order to read PLY files, I used the hapPLY library. It is a very easy and useful library. You just need to include header which can be found in [GitHub repo](https://github.com/nmwsharp/happly).
+In order to read PLY files, I used the hapPLY library. It is a very easy and useful library. You just need to include a header which can be found in the [GitHub repo](https://github.com/nmwsharp/happly).
 
 ## Code Design
 My code design is changed a little bit with new attributes. Material class gets new attributes such as material type, mirror reflectance, reflection and refraction indices etc.
@@ -144,13 +144,12 @@ function rayTracer(ray):
 13.         fr <- fresnel(ray, normal)
 14.         if not a case of total internal reflection:
 15.             refractionColor <- refraction(ray, hit_point, normal, refractionInd)
-16.             absorbance <- material->absorptionCoef * (-distance)
-17.             transparency <- expf(absorbance)
-18.         reflectionColor <- reflection(ray, hit_point, normal)
-19.         color += transparency * (reflectionColor*fr + refractionColor*(1-fr))
-20. else:
-21.     color <- zero
-22. return color
+16.             transparency <- expf(absorption coefficient * (-distance))
+17.         reflectionColor <- reflection(ray, hit_point, normal)
+18.         color += transparency * (reflectionColor*fr + refractionColor*(1-fr))
+19. else:
+20.     color <- zero
+21. return color
 ```
 
 Note that the final refraction color is multiplied with transparency factor. It comes from the Beer's Law.
