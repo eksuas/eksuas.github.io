@@ -44,7 +44,7 @@ For these purposes, the input XML files include new attributes. Some of new comi
 In addition, this section includes an implementation of ray tracing acceleration method. By this way, huge meshes can be traced. So, we need huge meshes. But, as known, more complex meshes can be found in ply file format on the web. So, our XML file includes a ply filename as a mesh faces, as well. This file includes mesh vertices and faces with vertex indices. The normal vectors can be found in ply files, as well.
 
 ## Reading meshes from the PLY file
-In order to read PLY files, I used the hapPLY library. It is a very easy and useful library. You just need to include header which can be found in [Github repo](https://travis-ci.com/nmwsharp/happly.svg?branch=master)
+In order to read PLY files, I used the hapPLY library. It is a very easy and useful library. You just need to include header which can be found in [GitHub repo](https://github.com/nmwsharp/happly).
 
 ## Code Design
 My code design is changed a little bit with new attributes. Material class gets new attributes such as material type, mirror reflectance, reflection and refraction indices etc.
@@ -129,7 +129,28 @@ Therefore, the final color of hit point can be calculated according to the mater
 
 ```markdown
 function rayTracer(ray):
-
+1.  find the closest intersected object and distance to it
+2.  if there is intersection:
+3.      compute hit_point
+4.      compute normal if object is a sphere
+5.      color <- shading(intersected_object, ray, hit_point, normal)
+6.      if material type is mirror:
+7.          color += mirror reflection * reflection(ray, hit_point, normal)
+8.      if material type is conductor:
+9.          fr <- fresnel(ray, normal)
+10.         reflectionColor <- reflection(ray, hit_point, normal)
+11.         color += mirror reflection * reflectionColor * fr
+12.     if material type is dielectric:
+13.         fr <- fresnel(ray, normal)
+14.         if not a case of total internal reflection:
+15.             refractionColor <- refraction(ray, hit_point, normal, refractionInd)
+16.             absorbance <- material->absorptionCoef * (-distance)
+17.             transparency <- expf(absorbance)
+18.         reflectionColor <- reflection(ray, hit_point, normal)
+19.         color += transparency * (reflectionColor*fr + refractionColor*(1-fr))
+20. else:
+21.     color <- zero
+22. return color
 ```
 
 Note that the final refraction color is multiplied with transparency factor. It comes from the Beer's Law.
