@@ -208,7 +208,7 @@ After acceleration:
 XML file is parsed in 0 sec
 Maximum BVH depth is 2
 Preprocessing is finished in 0 sec
-Scene is created in 1 sec
+Scene is created in 0 sec
 ```
 
 ### ScienceTree.xml
@@ -218,9 +218,9 @@ Scene is created in 1 sec
 Before acceleration: Real running time is 1m26,100s
 After acceleration:
 XML file is parsed in 0 sec
-Maximum BVH depth is 2
+Maximum BVH depth is 9
 Preprocessing is finished in 0 sec
-Scene is created in 1 sec
+Scene is created in 3 sec
 ```
 
 ### Bunny.xml
@@ -232,7 +232,7 @@ After acceleration:
 XML file is parsed in 0 sec
 Maximum BVH depth is 10
 Preprocessing is finished in 0 sec
-Scene is created in 0 sec
+Scene is created in 1 sec
 ```
 
 ### chinese_dragon.xml
@@ -240,10 +240,10 @@ Scene is created in 0 sec
 
 ```markdown
 After acceleration:
-XML file is parsed in 375 sec
+XML file is parsed in 2 sec
 Maximum BVH depth is 19
 Preprocessing is finished in 1 sec
-Scene is created in 2 sec
+Scene is created in 1 sec
 ```
 
 ### other_dragon.xml
@@ -253,8 +253,8 @@ Scene is created in 2 sec
 After acceleration:
 XML file is parsed in 1 sec
 Maximum BVH depth is 19
-Preprocessing is finished in 2 sec
-Scene is created in 9 sec
+Preprocessing is finished in 3 sec
+Scene is created in 8 sec
 ```
 
 The last two examples are more challenging examples that include many triangles and take much more time. I could not get a result without BVH acceleration.
