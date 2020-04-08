@@ -68,7 +68,7 @@ It is clearly seen that the spotlight is not in the correct direction because we
 
 <p float="left">
   <img src="results/hw3/process/v5_spheres_dof_inversed_ray_send_to_shadow_test.png" width="410" />
-  <img src="results/hw3/process/v4_spheres_dof_light_transformed.png" width="410" />
+  <img src="results/hw3/process/v6_spheres_dof_intensity_divided_d_world.png" width="410" />
 </p>
 
 The problematic intensity is divided by the correct distance between light source and hit point (in shading function). In addition, obviously, mesh normal vectors have some problems. After fixing the calculation of normal vectors, I got the correctly transformed result in the below.
