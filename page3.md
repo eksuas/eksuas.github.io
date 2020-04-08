@@ -171,7 +171,7 @@ The field of <FocusDistance> and <ApertureSize> will be used for the depth of fi
 ### Depth of Field
 Real cameras have finite aperture as opposed to the pinhole model we have been using so far. Without a proper lens, a finite aperture camera is guaranteed to produce blurry images on its image plane. A lens is a glass contraption which allows focusing objects at a certain distance from it to a single point behind the lens. This is known as the focal or focus distance of the lens. Photographers typically put their main subject at this distance to create an effect where the subject is sharp but the background is blurry. In distributed ray tracing we can simulate this effect to make our renderings as if they are coming from a real camera (are taken from the notes of Assoc. Prof. Dr. Ahmet Oğuz Akyüz)
 
-<p align="left"><img height="400" src="results/hw3/dof.PNG"></p>
+<p><img height="400" src="results/hw3/dof.PNG"></p>
 
 It is so straightforward to implement as given below.
 
