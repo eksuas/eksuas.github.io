@@ -254,8 +254,18 @@ Let's see the result of motion blur.
 Firstly, I was confused about the order of transformation multiplications in the intersection tests. I mean that I could not decide to multiply ray with the inverse motion translation or inverse object transformations matrices. I tried the multiply ray with inverse motion translation matrix after transforming it to the object local world. But, as seen below (left), it was wrong for the given motion vector. Its effect would be too much if it is applied at non-local space. After changing the order I got the true result as seen right.
 
 <p float="left">
+  <img src="results/hw3/process/cornellbox_boxes_dynamic_1.png" width="410" />
+  <img src="results/hw3/process/cornellbox_boxes_dynamic_0.png" width="410" />
+</p>
+
+<p float="left">
   <img src="results/hw3/process/cornellbox_boxes_dynamic_v1.png" width="410" />
   <img src="results/hw3/cornellbox_boxes_dynamic.png" width="410" />
+</p>
+
+<p float="left">
+  <img src="results/hw3/process/dragon_dynamic_v2.png" width="410" />
+  <img src="results/hw3/dragon_dynamic.png" width="410" />
 </p>
 
 ## Other Improvements
