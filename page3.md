@@ -238,7 +238,7 @@ The before and after result of the Depth of Field effect can be seen below. But,
 After spending many hours, I realized that the origin of my primary rays was the camera position instead of the point of s (given in Figure 1). Final before and after result can be seen below.
 
 <p float="left">
-  <img src="results/hw3/process/v7_spheres_dof_mesh_normal_fixed.png" width="410" />
+  <img src="results/hw3/process/v7_spheres_dof_mesh_normal_fixed.png.png" width="410" />
   <img src="results/hw3/spheres_dof.png" width="410" />
 </p>
 
