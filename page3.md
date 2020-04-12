@@ -276,7 +276,7 @@ As we know from the previous section, when an incident ray intersects with a die
 
 <p float="left">
   <img src="results/hw3/process/metal_glass_plates_dielectric_ok.png" width="410" />
-  <img src="results/hw3/metal_glass_plates_dielectric.png" width="410" />
+  <img src="results/hw3/metal_glass_plates.png" width="410" />
 </p>
 
 If an incident ray is already inside (i.e. refraction ray of another ray) its generated reflection ray will be inside, as well. Thus, we have to apply absorption to this ray instead of the generated refraction ray. It solves the problem seen in the left image.
@@ -296,7 +296,6 @@ Let's look at the final results of my implementation after all improving.
 
 ### simple_transform.xml
 <p align="left"><img height="500" src="results/hw3/simple_transform.png"></p>
-
 ```markdown
 XML file is parsed in 0 sec
 Maximum BVH depth is 1
@@ -306,7 +305,6 @@ Scene is created in 0 sec
 
 ### spheres_dof.xml
 <p align="left"><img height="500" src="results/hw3/spheres_dof.png"></p>
-
 ```markdown
 XML file is parsed in 0 sec
 Maximum BVH depth is 1
@@ -316,7 +314,6 @@ Scene is created in 38 sec
 
 ### cornellbox_boxes_dynamic.xml
 <p align="left"><img height="500" src="results/hw3/cornellbox_boxes_dynamic.png"></p>
-
 ```markdown
 XML file is parsed in 0 sec
 Maximum BVH depth is 2
@@ -326,7 +323,6 @@ Scene is created in 390 sec
 
 ### cornellbox_brushed_metal.xml
 <p align="left"><img height="500" src="results/hw3/cornellbox_brushed_metal.png"></p>
-
 ```markdown
 XML file is parsed in 0 sec
 Maximum BVH depth is 1
@@ -336,7 +332,6 @@ Scene is created in 214 sec
 
 ### metal_glass_plates.xml
 <p align="left"><img height="500" src="results/hw3/metal_glass_plates.png"></p>
-
 ```markdown
 XML file is parsed in 0 sec
 Maximum BVH depth is 2
@@ -346,7 +341,6 @@ Scene is created in 87 sec
 
 ### tap_0200.xml
 <p align="left"><img height="500" src="results/hw3/tap_0200.png"></p>
-
 ```markdown
 XML file is parsed in 0 sec
 Maximum BVH depth is 17
@@ -356,7 +350,6 @@ Scene is created in 333 sec
 
 ### dragon_dynamic.xml
 <p align="left"><img height="500" src="results/hw3/dragon_dynamic.png"></p>
-
 ```markdown
 XML file is parsed in 6 sec
 Maximum BVH depth is 19
