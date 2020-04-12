@@ -32,9 +32,10 @@ I have used GLM library for all transformation and vector-matrix multiplications
 Transformations are added to the Scene class as a list of string where the first character indicates the type of transformation and the remaining number is the identification number of the transformation. In order to speed the process, all matrix multiplications are done in preprocess and saved as a localMatrix and inverseLocalMatrix element to the Object class.  
 
 ## Algorithm
-When implementing transformation, I transformed the ray by the inverse transformation matrix of the current object instead of transforming the objects. In other words, coming rays are firstly inversely transformed and then processed in the previous intersection tests of objects.
+When implementing transformation, I transformed the ray by the inverse transformation matrix of the current object instead of transforming the objects. In other words, coming rays are firstly inversely transformed and then processed in the intersection tests of objects (explained in the previous sections).
 
-I plan to use the same things for Bounding Boxes. But, in preprocessing, bounding boxes are combined to a new bounding box. Thus, they must be in the same space to be added properly. Because of this reason, unfortunately, I could not apply the same methods for bounding boxes. In preprocessing, bounding boxes are created from the points of transformed objects and then, in intersection tests, the world ray is directly tested with them.
+In my first approach, I planned to use the same things for Bounding Boxes. But, in preprocessing, bounding boxes are combined to a new bounding box. Thus, they had to be in the same space to be added properly. Because of this reason, I could not apply the same methods for bounding boxes. In preprocessing, bounding boxes were created from the points of transformed objects and then, in intersection tests, the world ray was directly tested with them.
+Let's see its effects in the following part, implementation process, and why I changed my approach :)
 
 ```markdown
 Class Object
@@ -57,24 +58,27 @@ Of course, not everything was as easy as described above :D When I thought that 
   <img src="results/hw3/process/v2_spheres_dof_after_transformed_ray_normalized.png" width="410" />
 </p>
 
-I realized that I forgot to normalize ray directions after these transformations. After that I got the result above (right). Now, the problem seemed to be related to shading because light directions don't look correct and the scene is too bright. I checked the shading function and realized that all shading operations are done via non-transformed ray. After coming from the intersection test, if the ray is intersected with an object, ray should be inversely transformed again for remaining shading operations. After fixing it, the results would be below (left).
+I realized that I forgot to normalize ray directions after these transformations. After that I got the result above (right). Now, the problem seemed to be related to shading because light directions didn't look correct and the scene was too bright. I checked the shading function and realized that all shading operations were done via non-transformed ray. In addition, after a ray comes from the intersection test, if it is intersected with an object, the ray should be inversely transformed again for remaining shading operations. After fixing these, the result would be below (left).
 
 <p float="left">
   <img src="results/hw3/process/v3_spheres_dof_shading_done_with_transformed_ray.png" width="410" />
   <img src="results/hw3/process/v4_spheres_dof_light_transformed.png" width="410" />
 </p>
 
-It is clearly seen that the spotlight is not in the correct direction because we need to transform the light direction to the inverse local space of the object, as well. After fixing related operations on shading function, I got the result in the above figure (right). But, there are some problems still. Shadows do not look like correctly. Yes, we have to re-transform intersection ray (with localMatrix of the object) to be sure that it is ready to intersect with other objects for shadow testing. The result can be seen in the following figure (left).
+It is clearly seen that the spotlight was not in the correct direction because I needed to transform the light direction to the inverse local space of the object, as well. After fixing related operations on the shading function, I got the result in the above figure (right). But, there were some problems still. Shadows didn't look correct. Yes, I had to re-transform intersection ray (with localMatrix of the object) to be sure that it would be ready to intersect with other objects for shadow testing. The result can be seen in the following figure (left).
 
 <p float="left">
   <img src="results/hw3/process/v5_spheres_dof_inversed_ray_send_to_shadow_test.png" width="410" />
   <img src="results/hw3/process/v6_spheres_dof_intensity_divided_d_world.png" width="410" />
 </p>
 
-The problematic intensity is divided by the correct distance between light source and hit point (in shading function). In addition, obviously, mesh normal vectors have some problems. After fixing the calculation of normal vectors, I got the correctly transformed result in the below.
+The intensity was divided by the correct distance between light source and hit point (in shading function). In addition, obviously, mesh normal vectors had some problems. After fixing the calculation of normal vectors, I got the correctly transformed result in the below.
 
 <p align="left"><img width="410" src="results/hw3/process/v7_spheres_dof_mesh_normal_fixed.png.png"></p>
 
+Ok..
+But this approach was so painful and wasteful! I realized that instead of transforming everything with the inverse transformation matrix, I can just transform the normal vector of objects :D
+It is more easy to implement and absolutely more faster by avoiding many operations. I switched this method and got the same results.
 
 # 2. Instancing
 
@@ -135,7 +139,7 @@ function createScene():
 
 ## Implementation Process
 
-Multi sampling gets more smooth edges as seen the example image below. Left images show the before than multisampling effect. It is a straightforward and I did not use any difficulties during its implementation.
+Multisampling gets more smooth edges as seen in the example image below. Left images show the before multisampling effect. It is straightforward and I did not use any difficulties during its implementation.
 
 <p float="left">
   <img src="results/hw3/process/dragon_dynamic_v1.png" width="410" />
@@ -171,9 +175,7 @@ The field of <FocusDistance> and <ApertureSize> will be used for the depth of fi
 ### Depth of Field
 Real cameras have finite aperture as opposed to the pinhole model we have been using so far. Without a proper lens, a finite aperture camera is guaranteed to produce blurry images on its image plane. A lens is a glass contraption which allows focusing objects at a certain distance from it to a single point behind the lens. This is known as the focal or focus distance of the lens. Photographers typically put their main subject at this distance to create an effect where the subject is sharp but the background is blurry. In distributed ray tracing we can simulate this effect to make our renderings as if they are coming from a real camera (are taken from the notes of Assoc. Prof. Dr. Ahmet Oğuz Akyüz)
 
-<p align="middle"><img height="400" src="results/hw3/dof.PNG"></p>
-
-It is so straightforward to implement as given below.
+<p align="middle"><img height="400" src="results/hw3/dof.PNG" alt="Figure-1: Depth of Field"></p>
 
 ```markdown
 function createScene():
@@ -212,7 +214,7 @@ function reflectionRay(ray, normal, roughness):
 
 ### Motion Blur
 
- We can compute the Motion Blur effect by generating multiple rays in different times [0-1]. These ray times are generated initially and do not change while reflecting or refracting. Time 0 and 1 represent the initial and final positions of the object, respectively. A translation of a ray at any time in this interval is interpolated according to the motion vector. Note that this translation is independent from our transformation matrices in the previous part.
+We can compute the Motion Blur effect by generating multiple rays in different times [0-1]. These ray times are generated initially and do not change while reflecting or refracting. Time 0 and 1 represent the initial and final positions of the object, respectively. A translation of a ray at any time in this interval is interpolated according to the motion vector. Note that this translation is independent from our transformation matrices in the previous part.
 
 Only intersection tests of objects and bounding boxes are affected from motion blur as given below. I multiplied the origin of ray with the translation matrix of motion. Because we assumed that motion is done only by translation, ray direction cannot be changed by multiplying any translation matrix.
 
@@ -226,79 +228,66 @@ Only intersection tests of objects and bounding boxes are affected from motion b
 
 ## Implementation Process
 
-The before and after result of the Depth of Field effect can be seen below. But, there is still a problem with focusing area.
+The before and after result of the Depth of Field effect can be seen below. But, there was a problem with the focusing area.
 
 <p float="left">
   <img src="results/hw3/process/v7_spheres_dof_mesh_normal_fixed.png.png" width="410" />
   <img src="results/hw3/process/spheres_dof.png" width="410" />
 </p>
 
-The very first result of the Glossy Reflection is given below. Obviously, something was wrong on the left. Thanks to Alper Sahistan, I realized that my normalized random number n1 and n2 should be between -0.5 and 0.5 instead of 0 and 1. After that fix, I got the true result on the right.
+After spending many hours, I realized that the origin of my primary rays was the camera position instead of the point of s (given in Figure 1). Final before and after result can be seen below.
+
+<p float="left">
+  <img src="results/hw3/process/spheres_dof.png.png" width="410" />
+  <img src="results/hw3/spheres_dof.png" width="410" />
+</p>
+
+The very first result of the Glossy Reflection is given below. Obviously, something was wrong on the left. Thanks to Alper Sahistan, I realized that my normalized random number n1 and n2 should be between -0.5 and 0.5 instead of 0 and 1. After fixing it, I got the true result on the right.
 
 <p float="left">
   <img src="results/hw3/process/v9_cornellbox_brushed_metal_glossy_ref.png" width="410" />
   <img src="results/hw3/cornellbox_brushed_metal.png" width="410" />
 </p>
 
-Let's see the result of motion blur. Firstly, I was confused about the order of transformation multiplications in the intersection tests. I mean that I could not decide to multiply ray with the inverse motion translation or inverse object transformations matrices. I tried the multiply ray with inverse motion translation matrix after transforming it to the object local world. But, as seen below (left), it was wrong for the given motion vector. Its effect would be too much if it is applied at non-local space. After changing the order I got the true result as seen right.
+Let's see the result of motion blur.
+
+Firstly, I was confused about the order of transformation multiplications in the intersection tests. I mean that I could not decide to multiply ray with the inverse motion translation or inverse object transformations matrices. I tried the multiply ray with inverse motion translation matrix after transforming it to the object local world. But, as seen below (left), it was wrong for the given motion vector. Its effect would be too much if it is applied at non-local space. After changing the order I got the true result as seen right.
 
 <p float="left">
   <img src="results/hw3/process/cornellbox_boxes_dynamic_v1.png" width="410" />
   <img src="results/hw3/cornellbox_boxes_dynamic.png" width="410" />
 </p>
 
+## Other Improvements
+
+### Bugs on Dielectric Materials
+
+As we know from the previous section, when an incident ray intersects with a dielectric object, it produces two rays: refraction and reflection ray. I assumed that the refraction ray is always inside (i.e. its color is suffered from absorption) and the reflection ray is always outside (i.e. its color never is suffered from absorption). But it was an absolutely wrong assumption.
+
+<p float="left">
+  <img src="results/hw3/process/metal_glass_plates_dielectric_ok.png" width="410" />
+  <img src="results/hw3/metal_glass_plates_dielectric.png" width="410" />
+</p>
+
+If an incident ray is already inside (i.e. refraction ray of another ray) its generated reflection ray will be inside, as well. Thus, we have to apply absorption to this ray instead of the generated refraction ray. It solves the problem seen in the left image.
+
+Surprisingly, this mistake didn't have any effect on previous dielectric scenes, so I could not be aware of that until now.
+
+### Time Improvement
+
+The running times of almost all of the examples were larger than I expected because many of them have huge numbers of Multisampling. Creating a single scene takes less than a second in many cases, but creating the same scene with 500 times more takes linearly increasing time. With my pure BVH implementation, most of the scene took 10-15 minutes. Just generating one sample from dragon_dynamic.xml took around 2 hours, and the scene is composed of 100 samples. I need to improve the BVH.
+
+For this purpose, instead of combining the boxes of different objects, the root node can be divided into main objects (not faces). Thus, we do not need to transform vertices to compute the combining bounding box. By this approach, if a ray intersected with the bounding box of a mesh, it will be transformed with the inverse transformation matrix of an object one time. Then, all intersection tests of faces of the object will be in its local space. Therefore, there is no need for any more transformation.
+
+This approach made BVH more than 100 times faster so generating all 100 samples of dragon_dynamic.xml takes around 75 mins instead of 200 hours!
+
 ## Final Results
 Let's look at the final results of my implementation after all improving.
-
-### cornellbox_boxes_dynamic.xml
-<p align="left"><img height="500" src="results/hw3/cornellbox_boxes_dynamic.png"></p>
-
-```markdown
-Is BHV acceleration used: 1
-XML file is parsed in 0 sec
-Maximum BVH depth is 4
-Preprocessing is finished in 0 sec
-Scene is created in 550 sec
-```
-
-### cornellbox_brushed_metal.xml
-<p align="left"><img height="500" src="results/hw3/cornellbox_brushed_metal.png"></p>
-
-```markdown
-Is BHV acceleration used: 1
-XML file is parsed in 0 sec
-Maximum BVH depth is 2
-Preprocessing is finished in 0 sec
-Scene is created in 147 sec
-```
-
-### dragon_dynamic.xml
-<p align="left"><img height="500" src="results/hw3/dragon_dynamic.png"></p>
-
-```markdown
-Is BHV acceleration used: 1
-XML file is parsed in 3 sec
-Maximum BVH depth is 20
-Preprocessing is finished in 8 sec
-Scene is created in 7320 sec
-```
-
-### metal_glass_plates.xml
-<p align="left"><img height="500" src="results/hw3/metal_glass_plates.png"></p>
-
-```markdown
-Is BHV acceleration used: 1
-XML file is parsed in 0 sec
-Maximum BVH depth is 4
-Preprocessing is finished in 0 sec
-Scene is created in 119 sec
-```
 
 ### simple_transform.xml
 <p align="left"><img height="500" src="results/hw3/simple_transform.png"></p>
 
 ```markdown
-Is BHV acceleration used: 1
 XML file is parsed in 0 sec
 Maximum BVH depth is 1
 Preprocessing is finished in 0 sec
@@ -309,22 +298,58 @@ Scene is created in 0 sec
 <p align="left"><img height="500" src="results/hw3/spheres_dof.png"></p>
 
 ```markdown
-Is BHV acceleration used: 1
 XML file is parsed in 0 sec
 Maximum BVH depth is 1
 Preprocessing is finished in 0 sec
-Scene is created in 21 sec
+Scene is created in 38 sec
+```
+
+### cornellbox_boxes_dynamic.xml
+<p align="left"><img height="500" src="results/hw3/cornellbox_boxes_dynamic.png"></p>
+
+```markdown
+XML file is parsed in 0 sec
+Maximum BVH depth is 2
+Preprocessing is finished in 0 sec
+Scene is created in 390 sec
+```
+
+### cornellbox_brushed_metal.xml
+<p align="left"><img height="500" src="results/hw3/cornellbox_brushed_metal.png"></p>
+
+```markdown
+XML file is parsed in 0 sec
+Maximum BVH depth is 1
+Preprocessing is finished in 0 sec
+Scene is created in 214 sec
+```
+
+### metal_glass_plates.xml
+<p align="left"><img height="500" src="results/hw3/metal_glass_plates.png"></p>
+
+```markdown
+XML file is parsed in 0 sec
+Maximum BVH depth is 2
+Preprocessing is finished in 0 sec
+Scene is created in 87 sec
 ```
 
 ### tap_0200.xml
 <p align="left"><img height="500" src="results/hw3/tap_0200.png"></p>
 
 ```markdown
-Is BHV acceleration used: 1
 XML file is parsed in 0 sec
-Maximum BVH depth is 18
+Maximum BVH depth is 17
 Preprocessing is finished in 0 sec
-Scene is created in 806 sec
+Scene is created in 333 sec
 ```
 
-The running times of almost all of the examples were larger than I expected because many of them have huge numbers of sampling. Creating a single scene takes less than a second in many cases, but creating the same scene with 500 times more takes linearly increasing time.
+### dragon_dynamic.xml
+<p align="left"><img height="500" src="results/hw3/dragon_dynamic.png"></p>
+
+```markdown
+XML file is parsed in 6 sec
+Maximum BVH depth is 19
+Preprocessing is finished in 10 sec
+Scene is created in 4352 sec
+```
