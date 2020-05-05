@@ -56,12 +56,18 @@ Once a <Textures> list is given, objects can have at most two textures (one for 
 In this improvement, I added many classes and new features. Thus, I have changed the design pretty much.
 New classes "TextureMap" and "Image" are implemented. These include the all new features given in the previous part. Object class will have new features, as well. Each object can have a textureDiffuse and/or textureNormal. These are determined according to the decalMode of the corresponding texture of the object. It decalMode belongs to the first set of decalMode, it is set as a textureDiffuse, otherwise, it will be considered as a textureNormal.
 
+In addition, I changed my vertex approach, and created new class including all information related to the vertex.
+
 ```markdown
+Class Vertex
+    vec3 pos
+	vec2 texCoord
+
 Class Image
-    width
-    height
-    component
-    data
+    int    width
+    int    height
+    int    component
+    byte** data
 
 Class TextureMap
     Image image
@@ -230,14 +236,104 @@ I got some write defects previously (seen in the left). And, I realized it appea
 Please note that the left image is produced with the hit point at world space while the right one is from the object local space.
 
 # 3. Normal Mapping
+We can manipulate the normal vectors by using the texture value so that the objects look more realistic.
 
 ## Input
+Normal mapping is applied if the DecalMode field of the TextureMap is replace_normal.
+
+```markdown  
+<Scene>
+    <Textures>
+        <TextureMap id="1" type="image">
+            <DecalMode>replace_normal</DecalMode>
+        </TextureMap>
+    </Textures>
+</Scene>
+```
 
 ## Code Design
+Each vertex can have its own normal vector. So, I have improved Vertex class by adding the normal vector.
+
+The normal space obtained from the texture should be integrated to the object properly so that the texture normal will be suitable for each orientation of the object. In order to achieve it, texture normal should be transformed to the tangent space of the object. Thus, each object has a TBN matrix to transform a vector to the object tangent space.
+
+```markdown
+Class Vertex
+    ...
+	vec3 normal
+
+Class Object
+    ...
+	mat3 tbnMatrix
+```
 
 ## Algorithm
+In normal mapping, a normal vector is extracted from the texture and transformed to the tangent space of the corresponding object. We need to get a normal vector from texture and compute the tangent space of the objects.
+
+It is relatively easier to implement for triangles. The TBN matrix can be computed in preprocessing as given below.
+
+```markdown
+Class Object
+ func init ():
+ 1. ... // previous implementations
+ 2. if the object type is triangle:
+ 3.         ... // previous implementations
+ 4.         if textureNormal is not NULL:
+ 5.             e1, e2 <- compute edge vector of triangles
+ 6.             E <- compute matrix from edges e1 and e2
+ 7.             A <- take the difference between texCoord of origin to the others
+ 8.             tbnMatrix <- inverse(A) * E
+ 9.     ...
+10. return normalize(normalMatrix * normalPrime)
+```
+
+Once a TBN matrix of an object is constructed, it can be used in the normal calculations dynamically, as given below.
+
+```markdown
+Class Object
+ func getNormal (pHit):
+ 1. if the object type is triangle:
+ 2.     if type of textureNormal is "image":
+ 3.         texCoord <- compute by using the barycentric coefficients
+ 4.         if decalMode of textureNormal is "replace_normal":
+ 5.             normalPrime <- textureNormal->getColor(texCoord) - vec3(0.5)
+ 6.             normalPrime <- tbnMatrix * normalize(normalPrime)
+ 7.     ...
+ 8. return normalize(normalMatrix * normalPrime)
+```
+
+We cannot compute the TBN matrix for spheres in preprocessing since it depends on the hit point. Thus, the TBN matrix of spheres is computed dynamically in the getNormal method of the object as below.
+
+```markdown
+Class Object
+ func getNormal (pHit):
+ 1. if the object type is triangle:
+ 2.     ... // previous implementations
+ 3. if the object type is sphere:
+ 4.     phi <- atan2(normal.z, normal.x)
+ 5.     theta <- acos(normal.y, normal.x)
+ 6.     
+ 7.     tbnMatrix[0] <- vec3(normal.z * 2 * PI, 0, -normal.x * 2 * PI)
+ 8.     tbnMatrix[1] <- vec3(normal.y * cos(phi) * PI, \
+ 9.                          -sin(theta) * PI, \
+10.                          normal.y * sin(phi) * PI)
+11.     tbnMatrix[2] <- normal
+12.     ...
+13.     if type of textureNormal is "image":
+14.         texCoord <- vec2((PI-phi)/(2*PI), theta/PI)
+15.         if decalMode of textureNormal is "replace_normal":
+16.             normalPrime <- textureNormal->getColor(texCoord) - vec3(0.5)
+17.             normalPrime <- normalize(tbnMatrix) * normalize(normalPrime)
+18.     ...
+19. return normalize(normalMatrix * normalPrime)
+```
 
 ## Implementation Process
+In implementation, I firstly did not define new normal for normalPrime and save the new results on the previous normal. But it affects the other parts of the code since I used these pure normals in the texture mapping. I created a new variable for re-computed normals (normalPrime) and the problem is solved. The wrong (left) and correct (right) usage can be seen below.
+
+<p float="left">
+  <img src="results/hw4/process/cube_cushion_çünkü normal değerleri değiştirildikçe accumulate edecek şekilde aynı yere save oluyordu.png" width="410" />
+  <img src="results/hw4/cube_cushion.png" width="410" />
+</p>
 
 # 4. Bump Mapping
 
