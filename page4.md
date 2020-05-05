@@ -70,8 +70,8 @@ Class TextureMap
     mode  decalMode
     float normalizer
 
-    function init()
-    function getColor(texCoord)
+    function init ()
+    function getColor (texCoord)
 
 Class Object
     TextureMap* textureDiffuse
@@ -79,7 +79,7 @@ Class Object
     int         textureOffset
 	int         vertexOffset
 
-    function getTextureColor(pHit)
+    function getTextureColor (pHit)
 ```
 
 ## Algorithm
@@ -134,10 +134,10 @@ I had some difficulties on the implementation, especially for spheres. Because m
 
 Updated localMatrix (or object space matrix) is used to compute inverseLocalMatrix and the normalMatrix (as a inverse transformation of the local matrix).
 
-I employed the normal vectors in the world space (multiplied with the Normal Matrix) to compute the texture coordinates (see in the left). However, this approach was wrong. We need to the use normals in object local space so that we can transform the object once we get the correct texture value (see in the right). 
+I employed the normal vectors in the world space (multiplied with the Normal Matrix) to compute the texture coordinates (see in the left). However, this approach was wrong. We need to the use normals in object local space so that we can transform the object once we get the correct texture value (see in the right).
 
 <p float="left">
-  <img src="results/hw4/process/ellipsoids_texture_v2_v3.png" width="410" />
+  <img src="results/hw4/process/ellipsoids_texture_use the normal matrix in texture not local normal.png" width="410" />
   <img src="results/hw4/ellipsoids_texture.png" width="410" />
 </p>
 
