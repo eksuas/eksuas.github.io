@@ -227,6 +227,8 @@ I got some write defects previously (seen in the left). And, I realized it appea
   <img src="results/hw4/cube_perlin.png" width="410" />
 </p>
 
+Please note that the left image is produced with the hit point at world space while the right one is from the object local space.
+
 # 3. Normal Mapping
 
 ## Input
