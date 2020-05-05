@@ -89,6 +89,43 @@ Class Object
 ```
 
 ## Algorithm
+Firstly, assume that we already have the getTextureColor method of the object class. We can call it from the shading function and change the corresponding value according to the texture color as below.
+
+```markdown
+Class Scene
+ func shading (object, ray, pHit, normal, rayTime):
+ 1. if object.textureDiffuse is not NULL:
+ 2.     if object.textureDiffuse.decalMode is "blend_kd":
+ 3.         kd <- (kd + object.getTextureColor(pHit)) / 2
+ 4.   
+ 5.     if object.textureDiffuse.decalMode is "replace_kd":
+ 6.         kd <- object.getTextureColor(pHit)
+ 7.    
+ 8.     if object.textureDiffuse.decalMode is "replace_all":
+ 9.         return object.getTextureColor(pHit)
+10. ... // previously
+```
+
+We can employ getTextureColor to change the background color, as well.
+
+```markdown
+ func main ():
+ 1. ... // previously
+ 2.     for each output pixel:
+ 3.         ... // previously
+ 4.         color <- scene.raytracer(... &dist)
+ 5.  
+ 6.     if dist <= 0:       
+ 7.         if scene.textureBackground is not NULL:
+ 8.             texCoord <- vec2(i/camera.nx, j/camera.ny)
+ 9.             color <- scene.textureBackground.getColor(texCoord)
+10.         else:
+11.             color <- scene.backgroundColor
+12. ... // previously
+```
+
+Let's compute the getTextureColor method and the others :D 
+
 Texture mapping is applied for triangles and spheres. To achieve it, we should firstly construct texture coordinates of the objects. The texture coordinates of the triangle can be computed by using the barycentric coefficients (alpha and beta) obtained from the object-ray intersection. For the sphere, the UV coordinates of the hit point is employed.
 
 Note that I assumed that all sphere is a unit sphere such that their radius is one to simplify the most of the calculations. For this assumption, I used the scaling transformation we added in the previous section. Be careful when applying this scaling transformation. Firstly, the sphere should be translated to the center, then we should apply scaling, finally, it should be re-translate to its original location.
@@ -342,28 +379,120 @@ It was still incomplete. I added the TBN matrix transformation the texture norma
   <img src="results/hw4/sphere_normal.png" width="410" />
 </p>
 
-In implementation, I firstly did not define new normal for normalPrime and save the new results on the previous normal. But it affects the other parts of the code since I used these pure normals in the texture mapping. I created a new variable for re-computed normals (normalPrime) and the problem is solved. The wrong (left) and correct (right) usage can be seen below.
+For triangles, I firstly did not define new normal for normalPrime and save the new results on the previous normal. But it affects the other parts of the code since I used these pure normals in the texture mapping. I created a new variable for re-computed normals (normalPrime) and the problem is solved. The wrong (left) and correct (right) usage can be seen below.
 
 <p float="left">
   <img src="results/hw4/process/cube_cushion_çünkü normal değerleri değiştirildikçe accumulate edecek şekilde aynı yere save oluyordu.png" width="410" />
   <img src="results/hw4/cube_cushion.png" width="410" />
 </p>
 
-
 # 4. Bump Mapping
+Bump mapping simulates the bumps or wrinkles in a surface without the need for geometric modifications to the model. In this part, we implement the Bump mapping on image and Perlin Noise textures.
 
 ## Input
+Bump mapping is applied if the DecalMode field of the TextureMap is "bump_normal". Moreover, the field of <BumpFactor> is used to arrange the effects of the Bump mapping.
+
+Note that Bump mapping can be applied on the both of "image" and "perlin" types of TextureMap.
+
+```markdown  
+<Scene>
+    <Textures>
+        <TextureMap id="1" type="image">
+            <DecalMode>bump_normal</DecalMode>
+            <BumpFactor>1</BumpFactor>
+        </TextureMap>
+        <TextureMap id="2" type="perlin">
+            <DecalMode>bump_normal</DecalMode>
+            <BumpFactor>5</BumpFactor>
+        </TextureMap>
+    </Textures>
+</Scene>
+```
 
 ## Code Design
+TextureMap should be updated for new fields coming from the Bump mapping.
+
+```markdown
+Class TextureMap
+    ...
+    float bumpFactor
+
+    func getBumpGradient (texCoord)
+```
 
 ## Algorithm
+The surface normal of a given surface is perturbed according to a bump map. The perturbed normal is then used instead of the original normal. We perturb the normal by using small steps towards new surface. For this purposes, we should compute the change (gradient) from the original surface to the bump surface.
+
+```markdown
+Class Object
+ func getBumpGradient (texCoord):
+ 1. c0 <- get color from the texCoord
+ 2. c1 <- get color from the texCoord by increasing i index by 1
+ 3. c2 <- get color from the texCoord by increasing j index by 1
+ 4.
+ 5. l0 <- take average of the color c0
+ 6. l1 <- take average of the color c1
+ 7. l2 <- take average of the color c2
+ 8.
+ 9. return bumpFactor * vec2(l1-l0, l2-l0)
+```
+
+Once gradient is computed, we can use it in the computation of new normals.
+
+```markdown
+Class Object
+ func getNormal (pHit):
+ 1. if the object type is triangle:
+ 2.     if type of textureNormal is "image":
+ 3.         texCoord <- compute by using the barycentric coefficients
+ 4.         ... // previously
+ 4.         if decalMode of textureNormal is "bump_normal":
+ 5.             grd <- textureNormal->getBumpGradient(texCoord)
+ 6.             qu <- tbnMatrix[0] + grd.s * normal;
+ 7.             qv <- tbnMatrix[1] + grd.t * normal;
+ 6.             normalPrime <- normalize(cross(qv, qu))
+ 7.     ...
+ 8. return normalize(normalMatrix * normalPrime)
+```
+
+Note that I used the non-normalized TBN matrix to keep the small changes in corresponding direction.
 
 ## Implementation Process
 
+The Bump mapping should be implemented very carefully. Any small mistake on calculation causes a big problem on the generated scene. I got the result on the left for a long time. The solving process was too complicated to be recorded for me. I changed many things, and their combinations, again and again. I think this section of the implementing the Advance Ray Tracer was the most challenging one until now.
+
+I stuck in the image seen on the left for a long time. After ending my implementation described above, it is solved as given in the right.
+
+<p float="left">
+  <img src="results/hw4/process/bump_mapping_transformed.png" width="410" />
+  <img src="results/hw4/bump_mapping_transformed.png" width="410" />
+</p>
+
+<p float="left">
+  <img src="results/hw4/process/sphere_nobump_justbump.png" width="410" />
+  <img src="results/hw4/sphere_nobump_justbump.png" width="410" />
+</p>
+
+
 ## Other Improvements (Smooth Shading)
+In this section of the implementing Advance Ray Tracer, I added smooth shading. It takes the weighted average of the normal of the vertices of a triangle. If the vertices of a triangle do not have their own normal vector, it can be computed by taking the average of the triangles shared by the same vertex. It was pretty straightforward when we have the barycentric coefficients as given below.
 
-### Bugs on
+```markdown
+Class Object
+ func getNormal (pHit):
+ 1. if the object type is triangle:
+ 2.     if smooth shading is active:
+ 3.         normalPrime <- normalize((1-alpha-beta) * v1.normal \
+ 4.                                   + alpha * v2.normal \
+ 5.                                   + beta * v3.normal)
+ 6.     ...
+ 7. return normalize(normalMatrix * normalPrime)
+```
 
+<p float="left">
+  <img src="results/hw4/process/tap_0200.png" width="410" />
+  <img src="results/hw4/tap_0200.png" width="410" />
+</p>
 
 ## Final Results
 Let's look at the final results of my implementation after all improving.
