@@ -138,7 +138,7 @@ I employed the normal vectors in the world space (multiplied with the Normal Mat
 
 <p float="left">
   <img src="results/hw4/process/ellipsoids_texture_use the normal matrix in texture not local normal.png" width="410" />
-  <img src="results/hw4/ellipsoids_texture.png" width="410" />
+  <img src="results/hw4/process/ellipsoids_texture_v2_v3.png" width="410" />
 </p>
 
 # 2. Perlin Noise
