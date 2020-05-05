@@ -61,7 +61,7 @@ In addition, I changed my vertex approach, and created new class including all i
 ```markdown
 Class Vertex
     vec3 pos
-	vec2 texCoord
+    vec2 texCoord
 
 Class Image
     int    width
@@ -83,7 +83,7 @@ Class Object
     TextureMap* textureDiffuse
     TextureMap* textureNormal
     int         textureOffset
-	int         vertexOffset
+    int         vertexOffset
 
     func getTextureColor (pHit)
 ```
@@ -124,7 +124,7 @@ We can employ getTextureColor to change the background color, as well.
 12. ... // previously
 ```
 
-Let's compute the getTextureColor method and the others :D 
+Let's compute the getTextureColor method and the others :D
 
 Texture mapping is applied for triangles and spheres. To achieve it, we should firstly construct texture coordinates of the objects. The texture coordinates of the triangle can be computed by using the barycentric coefficients (alpha and beta) obtained from the object-ray intersection. For the sphere, the UV coordinates of the hit point is employed.
 
@@ -141,13 +141,13 @@ Class Object
  func getTextureColor (pHit):
  1. if object type is triangle:
  2.     texCoord = (1-alpha-beta) * v1.texCoord \
-                + alpha * v2.texCoord \
-                + beta * v3.texCoord
- 3. if object type is sphere:
- 4.     phi = atan2(normal.z, normal.x)
- 5.     theta = acos(normal.y, normal.x)
- 6.     texCoord = ((PI-phi)/(2*PI), theta/PI)
- 3.     return textureDiffuse->getColor(texCoord)
+ 3.                + alpha * v2.texCoord \
+ 4.                + beta * v3.texCoord
+ 5. if object type is sphere:
+ 6.     phi = atan2(normal.z, normal.x)
+ 7.     theta = acos(normal.y, normal.x)
+ 8.     texCoord = ((PI-phi)/(2*PI), theta/PI)
+ 9.     return textureDiffuse->getColor(texCoord)
 ```
 
 Once we get the corresponding texture coordinates, we can interpolate the image color to these coordinates as given below.
@@ -215,7 +215,7 @@ Class TextureMap
 
     func getPerlinNoise (pHit)
     func f (x)
-	func w (x)
+    func w (x)
 ```
 
 ## Algorithm
