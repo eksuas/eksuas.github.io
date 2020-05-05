@@ -191,7 +191,7 @@ Class Object
  2.     ... // given in the texture mapping part
  3. if type of textureDiffuse is perlin:
  4.     point = pHit  
- 5.     if object type is not sphere
+ 5.     if object type is not sphere:
  6.         point = inverseLocalMatrix * pHit
  7.     return textureDiffuse->getPerlinNoise(pHit * textureDiffuse->noiseScale)
 ```
@@ -259,11 +259,11 @@ The normal space obtained from the texture should be integrated to the object pr
 ```markdown
 Class Vertex
     ...
-	vec3 normal
+    vec3 normal
 
 Class Object
     ...
-	mat3 tbnMatrix
+    mat3 tbnMatrix
 ```
 
 ## Algorithm
@@ -328,12 +328,27 @@ Class Object
 ```
 
 ## Implementation Process
+In the implementation process of the sphere normals, I got firstly the result given in the left. After examining the code, I realized that the number of components in a pixel could be wrong in some cases at the reading of a PNG file. Once the pixel values are read correctly, I got the image seen in the right.
+
+<p float="left">
+  <img src="results/hw4/process/sphere_normal.png" width="410" />
+  <img src="results/hw4/process/sphere_normal_v2 after reading the png file correctly.png" width="410" />
+</p>
+
+It was still incomplete. I added the TBN matrix transformation the texture normal so that the normals are arranged according the sphere surface (seen in the left). But its scale was too much. After adding the normalization, it fixed as given in the right.
+
+<p float="left">
+  <img src="results/hw4/process/sphere_normal_nonnormalized.png" width="410" />
+  <img src="results/hw4/sphere_normal.png" width="410" />
+</p>
+
 In implementation, I firstly did not define new normal for normalPrime and save the new results on the previous normal. But it affects the other parts of the code since I used these pure normals in the texture mapping. I created a new variable for re-computed normals (normalPrime) and the problem is solved. The wrong (left) and correct (right) usage can be seen below.
 
 <p float="left">
   <img src="results/hw4/process/cube_cushion_çünkü normal değerleri değiştirildikçe accumulate edecek şekilde aynı yere save oluyordu.png" width="410" />
   <img src="results/hw4/cube_cushion.png" width="410" />
 </p>
+
 
 # 4. Bump Mapping
 
