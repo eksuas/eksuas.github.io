@@ -1,0 +1,30 @@
+./raytracer examples/dragon_spot_light_msaa.xml 
+XML file is parsed in 4 sec
+Maximum BVH depth is 19
+Preprocessing is finished in 31 sec
+Scene is created in 141 sec
+
+./raytracer examples/cornellbox_area.xml 
+XML file is parsed in 0 sec
+Maximum BVH depth is 1
+Preprocessing is finished in 0 sec
+Scene is created in 62 sec
+
+./raytracer examples/scene.xml 
+XML file is parsed in 0 sec
+Maximum BVH depth is 19
+Preprocessing is finished in 1 sec
+Scene is created in 234 sec
+
+./raytracer examples/head_env_light.xml 
+XML file is parsed in 1 sec
+Maximum BVH depth is 12
+Preprocessing is finished in 0 sec
+Scene is created in 1395 sec
+
+./raytracer examples/sphere_point_hdr_texture.xml 
+XML file is parsed in 0 sec
+Maximum BVH depth is 1
+Preprocessing is finished in 0 sec
+Scene is created in 1 sec
+
