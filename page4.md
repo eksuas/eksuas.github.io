@@ -211,7 +211,7 @@ Class TextureMap
     char  noiseConversion
     float noiseScale
     int*  perlinNoise
-    vec3* noiseGradient;
+    vec3* noiseGradient
 
     func getPerlinNoise (pHit)
     func f (x)
@@ -254,7 +254,7 @@ Class TextureMap
  3. for each corner point at this cube:
  4.     v <- pHit - corner  
  5.     e <- noiseGradient[f(corner.x + f(corner.y + f(corner.z)))]
- 6.     noise <- noise + dot(e,v) * w(v.x) * w(v.y) * w(v.z);
+ 6.     noise <- noise + dot(e,v) * w(v.x) * w(v.y) * w(v.z)
  7. if noiseConversion is linear:
  8.     return (noise + 1) / 2
  9. if noiseConversion is absval:
@@ -448,8 +448,8 @@ Class Object
  4.         ... // previously
  4.         if decalMode of textureNormal is "bump_normal":
  5.             grd <- textureNormal->getBumpGradient(texCoord)
- 6.             qu <- tbnMatrix[0] + grd.s * normal;
- 7.             qv <- tbnMatrix[1] + grd.t * normal;
+ 6.             qu <- tbnMatrix[0] + grd.s * normal
+ 7.             qv <- tbnMatrix[1] + grd.t * normal
  6.             normalPrime <- normalize(cross(qv, qu))
  7.     ...
  8. return normalize(normalMatrix * normalPrime)
