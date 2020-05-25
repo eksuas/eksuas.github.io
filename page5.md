@@ -132,11 +132,11 @@ Class TextureMap
     float size
     int   imageID
     int   type   	//0:PointLight,
-					//1:AreaLight,
-					//2:DirectionalLight,
-					//3:SphericalDirectionalLight
-					//4:SpotLight
-	TextureMap* texture
+                    //1:AreaLight,
+                    //2:DirectionalLight,
+                    //3:SphericalDirectionalLight
+                    //4:SpotLight
+    TextureMap* texture
 
     func getDirection(pHit, obj_normal)
 	func illuminance(ray, obj_normal, obj_material)
@@ -385,8 +385,8 @@ Preprocessing is finished in 0 sec
 Scene is created in 1 sec
 ```
 
-### scene.xml
-<p align="left"><img src="results/hw5/scene.png"></p>
+### VeachAjar.xml
+<p align="left"><img src="results/hw5/VeachAjar.png"></p>
 ```markdown
 XML file is parsed in 0 sec
 Maximum BVH depth is 19
