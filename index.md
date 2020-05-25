@@ -14,6 +14,9 @@ Sections:
 
 4. [Texture Mapping, Perlin Noise, Normal and Bump Mapping](page4.md) includes the experiences of implementing the Texture Mapping, Normal and Bump Mapping. Smooth shading, Perlin Noise texture and Perlin Bump mapping is also implemented in this section.
 
+5. [HDR Imaging and Advanced Lighting](page5.md) includes the experiences of implementing the Advanced Lighting and HDR Imaging support.
+
+
 My development environment is Ubuntu18.4
 
 Required Libraries are libpng-dev, libtinyxml-dev and libglm-dev.
