@@ -136,7 +136,7 @@ Class TextureMap
                     //2:DirectionalLight,
                     //3:SphericalDirectionalLight
                     //4:SpotLight
-    TextureMap\* texture
+    TextureMap* texture
 
     func getDirection(pHit, obj_normal)
     func illuminance(ray, obj_normal, obj_material)
@@ -295,7 +295,7 @@ Class Light
  7.         radiance <- intensity / dot(light.direction, light.direction)
  8.     else if declination < coverageAngle / 2:
  9.         radiance <- intensity / dot(light.direction, light.direction)
-10.         radiance <- radiance \* pow((cos(declination) - cos(coverageAngle/2))
+10.         radiance <- radiance * pow((cos(declination) - cos(coverageAngle/2))
 11.         radiance <- radiance / (cos(falloffAngle/2.) - cos(coverageAngle/2)), 4)
 12.     else:
 13.         radiance <- 0
