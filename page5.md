@@ -28,7 +28,7 @@ Tone mapping features are given in the new field <Tonemap>. Our ray tracer will 
 ## Code Design
 The Camera class will get new methods as given below.
 
-```c
+```algorithm
 Class Camera
     ...
     bool   tonemap
@@ -40,7 +40,7 @@ Class Camera
 ## Algorithm
 Tone mapping is applied just before writing the float pixel values as a HDR image. I follow the [Reinhard Photographic Tone Mapping algorithm](https://odtuclass.metu.edu.tr/pluginfile.php/413863/mod_resource/content/2/hdr_photographic.pdf) as given below.
 
-```c
+```algorithm
 Class Scene
  func toneMapping (camera):
  1. lum_in <- convert the pixel_color to luminance
@@ -118,7 +118,7 @@ Lights' features are defined in the XML file as below.
 ## Code Design
 Light class is extended with new features and methods.
 
-```c
+```algorithm
 Class TextureMap
     vec3  position
     vec3  intensity
@@ -146,7 +146,7 @@ Class TextureMap
 All lighting features are combined in the light class and will be explained in the coming parts. Before that, let's examine the lighting methods called from our basic shading function as below. Here the difference from the previous sections, shadow can be checked for the lights coming from the infinity such as directional and Spherical directional lights. In these kinds of lights, our light direction will be a normalized vector so that we cannot check the shadow distance in the range of [0-1]. Instead, we can check the shadow by looking at the positive intersection distance. In order to switch this feature, I send a new boolean flag, inf, to the isShadow function.
 
 
-```c
+```algorithm
 Class Scene
  func shading (object, ray, pHit, normal):
  1. ... // previously
@@ -164,7 +164,7 @@ Class Scene
 ## 1. Point Light
 Radiance of the point light can be computed by dividing the intensity to the distance between hit point and the light source. After finding the radiance all shading functions can be applied.
 
-```c
+```algorithm
 Class Light
  func getDirection (pHit, normal):
  1. ... // previously
@@ -184,7 +184,7 @@ Class Light
 ## 2. Area Light
 In the area light, we generate a random point in the plane light. This point will represent the whole light. Thus, we can compute the direction from this point to the hit_point of the object. Note that this direction should be not normalized to compute the shadow correctly.
 
-```c
+```algorithm
 Class Light
  func getDirection (pHit, normal):
  1. ... // previously
@@ -198,7 +198,7 @@ Class Light
 
 Once getting the direction of the light, we can compute the declination by looking at the angle between the normal of the light source and the light direction to the object. In order to compute the radiance, we need to multiply the light intensity with the integral of the area. Note that, we choose a point to represent the whole light source.
 
-```c
+```algorithm
 Class Light
  func illuminance (ray, normal, material):
  1. ... // previously
@@ -217,7 +217,7 @@ Class Light
 ## 3. Directional Light
 Directional lights have a direction with a radiance and they come from infinity. Thus, we just send its direction in the getDirection method.
 
-```c
+```algorithm
 Class Light
  func getDirection (pHit, normal):
  1. ... // previously
@@ -227,7 +227,7 @@ Class Light
 
 Similarly, we don't need to compute the radiance. Instead, we just use the given radiance of the light in the shading.
 
-```c
+```algorithm
 Class Light
  func illuminance (ray, normal, material):
  1. ... // previously
@@ -240,7 +240,7 @@ Class Light
 ## 4. Spherical Directional (Environment) Light
 In spherical directional light, we generate a vector in the upper hemisphere. This vector will represent the light direction.
 
-```c
+```algorithm
 Class Light
  func getDirection (pHit, normal):
  1. ... // previously
@@ -258,7 +258,7 @@ Class Light
 
 We have used the light direction to get the radiance value from the lighting texture. Note that this radiance is just from the one sample and should be generalized (i.e. getting the expected value of the radiance) by multiplying the probability as below.
 
-```c
+```algorithm
 Class Light
  func illuminance (ray, normal, material):
  1. ... // previously
@@ -273,7 +273,7 @@ Class Light
 ## 5. Spot Light
 Spot light has its own direction as given below so that we can just send its direction in the getDirection method.
 
-```c
+```algorithm
 Class Light
  func getDirection (pHit, normal):
  1. ... // previously
