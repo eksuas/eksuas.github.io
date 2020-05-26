@@ -283,7 +283,7 @@ Class Light
 
 Spot lights have different radiance in three conditions. The radiance will be the same as the radiance of point light when the angle between the direction from the object and the original direction of the spotlight is less than half of the falloff angle. It decreases its radiance outside of this angle until half of the coverage angle. Finally, outside of the coverage angle, the radiance will be zero.
 
-```c
+```algorithm
 Class Light
  func illuminance (ray, normal, material):
  1. ... // previously
