@@ -131,7 +131,7 @@ Class TextureMap
     float falloffAngle
     float size
     int   imageID
-    int   type   	//0:PointLight,
+    int   type       //0:PointLight,
                     //1:AreaLight,
                     //2:DirectionalLight,
                     //3:SphericalDirectionalLight
@@ -139,7 +139,7 @@ Class TextureMap
     TextureMap* texture
 
     func getDirection(pHit, obj_normal)
-	func illuminance(ray, obj_normal, obj_material)
+    func illuminance(ray, obj_normal, obj_material)
 ```
 
 ## Algorithm
