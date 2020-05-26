@@ -42,7 +42,7 @@ Tone mapping is applied just before writing the float pixel values as a HDR imag
 
 ```algorithm
 Class Scene
- func toneMapping (camera):
+ function toneMapping (camera):
  1. lum_in <- convert the pixel_color to luminance
  2. // Equation 1
  3. lum_w_hat <- the summation of the log luminance with small epsilon
@@ -138,8 +138,8 @@ Class TextureMap
                     //4:SpotLight
     TextureMap* texture
 
-    func getDirection(pHit, obj_normal)
-    func illuminance(ray, obj_normal, obj_material)
+    function getDirection(pHit, obj_normal)
+    function illuminance(ray, obj_normal, obj_material)
 ```
 
 ## Algorithm
@@ -148,7 +148,7 @@ All lighting features are combined in the light class and will be explained in t
 
 ```algorithm
 Class Scene
- func shading (object, ray, pHit, normal):
+ function shading (object, ray, pHit, normal):
  1. ... // previously
  2. for each light in lights:
  3.     direction <- light.getDirection(pHit, normal)
@@ -166,14 +166,14 @@ Radiance of the point light can be computed by dividing the intensity to the dis
 
 ```algorithm
 Class Light
- func getDirection (pHit, normal):
+ function getDirection (pHit, normal):
  1. ... // previously
  2. if type is PointLight:
  3.     light.direction <- light.position - pHit
  4. return light.direction
 
 Class Light
- func illuminance (ray, normal, material):
+ function illuminance (ray, normal, material):
  1. ... // previously
  2. if type is PointLight:
  3.     radiance <- light.intensity / dot(direction, direction)
@@ -186,7 +186,7 @@ In the area light, we generate a random point in the plane light. This point wil
 
 ```algorithm
 Class Light
- func getDirection (pHit, normal):
+ function getDirection (pHit, normal):
  1. ... // previously
  2. if type is AreaLight:
  3.     x <- generate a number in [-0.5, 0.5]
@@ -200,7 +200,7 @@ Once getting the direction of the light, we can compute the declination by looki
 
 ```algorithm
 Class Light
- func illuminance (ray, normal, material):
+ function illuminance (ray, normal, material):
  1. ... // previously
  2. if type is AreaLight:
  3.     declination <- dot(normal, normalize(-light.direction))
@@ -219,7 +219,7 @@ Directional lights have a direction with a radiance and they come from infinity.
 
 ```algorithm
 Class Light
- func getDirection (pHit, normal):
+ function getDirection (pHit, normal):
  1. ... // previously
  2. if type is DirectionalLight:
  3.     return light.direction
@@ -229,7 +229,7 @@ Similarly, we don't need to compute the radiance. Instead, we just use the given
 
 ```algorithm
 Class Light
- func illuminance (ray, normal, material):
+ function illuminance (ray, normal, material):
  1. ... // previously
  2. if type is DirectionalLight:
  3.     radiance <- light.radiance
@@ -242,7 +242,7 @@ In spherical directional light, we generate a vector in the upper hemisphere. Th
 
 ```algorithm
 Class Light
- func getDirection (pHit, normal):
+ function getDirection (pHit, normal):
  1. ... // previously
  2. while true:
  3.     if type is SphericalDirectionalLight:
@@ -260,7 +260,7 @@ We have used the light direction to get the radiance value from the lighting tex
 
 ```algorithm
 Class Light
- func illuminance (ray, normal, material):
+ function illuminance (ray, normal, material):
  1. ... // previously
  2. if type is SphericalDirectionalLight:
  3.     texCoord.s <- 0.5 - atan2(direction.z, direction.x) * (1 / 2 PI)
@@ -275,7 +275,7 @@ Spot light has its own direction as given below so that we can just send its dir
 
 ```algorithm
 Class Light
- func getDirection (pHit, normal):
+ function getDirection (pHit, normal):
  1. ... // previously
  2. if type is SpotLight:
  3.     return light.direction
@@ -285,7 +285,7 @@ Spot lights have different radiance in three conditions. The radiance will be th
 
 ```algorithm
 Class Light
- func illuminance (ray, normal, material):
+ function illuminance (ray, normal, material):
  1. ... // previously
  2. if type is SpotLight:
  3.     dir1 <- normalize(light.spotDirection)

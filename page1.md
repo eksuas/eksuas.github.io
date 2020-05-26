@@ -5,7 +5,7 @@ Our very beginning ray tracer will support ray-triangle and ray-sphere intersect
 ## Input
 I will employ custom XML files that define the camera and scene properties as an input of the Ray Tracer. Example XML file:
 
-```markdown  
+```xml  
 <Scene>
     <ShadowRayEpsilon>1e-3</ShadowRayEpsilon>
     <BackgroundColor>0 0 0</BackgroundColor>
@@ -78,7 +78,7 @@ TinyXML can be install with this command:
 Most probably, I spent the most time on code design. It is very important to define your class and relationship well before coding the tracer. I follow the nested XML features and define classes for almost each attributes.
 
 ## Algorithm
-```markdown
+```algorithm
 function main:
 1. parse XML file and load object
 2. create scene models
@@ -93,7 +93,7 @@ function main:
 ```
 
 Ray tracer function traces a ray by checking any intersection. If there is a intersection, it computes the closest hit point and the closest distance and normal vector of the intersected object (if intersected object is a sphere) and it finally returns the color of pixel.
-```markdown
+```algorithm
 function rayTracer(ray):
 1. find the closest intersected object and distance to it
 2. if there is intersection:
@@ -106,7 +106,7 @@ function rayTracer(ray):
 ```
 
 Shading function calculates basic shadings.
-```markdown
+```algorithm
 function shading(intersected_object, ray, hit_point, normal):
 1. get the material information of the intersected_object
 2. color <- ambient_shading
@@ -125,7 +125,7 @@ function shading(intersected_object, ray, hit_point, normal):
 
 The isShadow function checks if the shadow_ray intersects with any object. The important point here is the shadow_ray is not a unit vector. Its direction is hit_point to the light_position. By the way, we know that the larger intersection distance than one will not cast shadow on this intersected object. Until figure out this situation, I spent much time on this problem :D
 Lets look at pseudo code:
-```markdown
+```algorithm
 function isShadow(intersected_object, shadow_ray):
 1. for each object:
 2.     if the object is not intersected_object:

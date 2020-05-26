@@ -17,7 +17,7 @@ If an object covered by a texture is based on triangles, the corresponding textu
 
 Once a <Textures> list is given, objects can have at most two textures (one for diffusion and one for normal mapping) from this list. These texture IDs are given in the <Textures> field of objects.
 
-```markdown  
+```xml  
 <Scene>
     <Textures>
         <Images>
@@ -76,8 +76,8 @@ Class TextureMap
     mode  decalMode
     float normalizer
 
-    func init ()
-    func getColor (texCoord)
+    function init ()
+    function getColor (texCoord)
 
 Class Object
     TextureMap* textureDiffuse
@@ -85,15 +85,15 @@ Class Object
     int         textureOffset
     int         vertexOffset
 
-    func getTextureColor (pHit)
+    function getTextureColor (pHit)
 ```
 
 ## Algorithm
 Firstly, assume that we already have the getTextureColor method of the object class. We can call it from the shading function and change the corresponding value according to the texture color as below.
 
-```markdown
+```algorithm
 Class Scene
- func shading (object, ray, pHit, normal, rayTime):
+ function shading (object, ray, pHit, normal, rayTime):
  1. if object.textureDiffuse is not NULL:
  2.     if object.textureDiffuse.decalMode is "blend_kd":
  3.         kd <- (kd + object.getTextureColor(pHit)) / 2
@@ -108,8 +108,8 @@ Class Scene
 
 We can employ getTextureColor to change the background color, as well.
 
-```markdown
- func main ():
+```algorithm
+ function main ():
  1. ... // previously
  2.     for each output pixel:
  3.         ... // previously
@@ -130,15 +130,15 @@ Texture mapping is applied for triangles and spheres. To achieve it, we should f
 
 Note that I assumed that all sphere is a unit sphere such that their radius is one to simplify the most of the calculations. For this assumption, I used the scaling transformation we added in the previous section. Be careful when applying this scaling transformation. Firstly, the sphere should be translated to the center, then we should apply scaling, finally, it should be re-translate to its original location.
 
-```markdown
+```algorithm
 Class Object
- func init ():
+ function init ():
  1. if object type is sphere:
  2.     localMatrix = localMatrix * translate(center.position)
  3.     localMatrix = localMatrix * scale(radius)
  4.     localMatrix = localMatrix * translate(-center.position)
 
- func getTextureColor (pHit):
+ function getTextureColor (pHit):
  1. if object type is triangle:
  2.     texCoord = (1-alpha-beta) * v1.texCoord \
  3.                + alpha * v2.texCoord \
@@ -152,20 +152,20 @@ Class Object
 
 Once we get the corresponding texture coordinates, we can interpolate the image color to these coordinates as given below.
 
-```markdown
+```algorithm
 Class TextureMap
- func getColor (texCoord):
+ function getColor (texCoord):
  1. if interpolation is bilinear:
  2.     return getColorBilinear(texCoord)
  3. else:
  4.     return getColorNearest(texCoord)
 
- func getColorNearest (texCoord):
+ function getColorNearest (texCoord):
  1. find the nearest pixel to the given texCoord
  2. normalize the color according to the Normalizer
  3. return color
 
- func getColorBilinear (texCoord):
+ function getColorBilinear (texCoord):
  1. find the nearest 4 pixels to the given texCoord
  2. interpolate them linearly by using their distance to the given texCoord
  3. normalize the color according to the Normalizer
@@ -191,7 +191,7 @@ Perlin noise is a procedural texture primitive, a type of gradient noise used by
 ## Input
 In the XML file, Perlin Noise can be defined as a TextureMap whose type is "perlin" instead of "image". It includes <NoiseConversion> as a linear or absolute value (absval). The noise scale is aldo given the <NoiseScale> field.
 
-```markdown  
+```xml  
 <Scene>
     <Textures>
         <TextureMap id="1" type="perlin">
@@ -206,24 +206,24 @@ In the XML file, Perlin Noise can be defined as a TextureMap whose type is "perl
 ## Code Design
 I implemented the Perlin Noise under the TextureMap class. Only the additional methods are given below.
 
-```markdown
+```algorithm
 Class TextureMap
     char  noiseConversion
     float noiseScale
     int*  perlinNoise
     vec3* noiseGradient
 
-    func getPerlinNoise (pHit)
-    func f (x)
-    func w (x)
+    function getPerlinNoise (pHit)
+    function f (x)
+    function w (x)
 ```
 
 ## Algorithm
 We can reach the Perlin Noise color via getTextureColor method of the object. Note that I have called the getPerlinNoise method with the intersection point at the object local space for triangle only. For spheres, I used the intersection point at the world space. It does not matter and only changes the scale of the Perlin Noise. I have performed like that to get the same results with Prof. Oğuz Akyüz Hoca.
 
-```markdown
+```algorithm
 Class Object
- func getTextureColor (pHit):
+ function getTextureColor (pHit):
  1. if type of textureDiffuse is image:
  2.     ... // given in the texture mapping part
  3. if type of textureDiffuse is perlin:
@@ -235,20 +235,20 @@ Class Object
 
 To get this noise, let's create the getPerlinNoise method of the TextureMap.  The implementation involves three steps: grid definition with random gradient vectors, computation of the dot product between the distance-gradient vectors and interpolation between these values.
 
-```markdown
+```algorithm
 Class TextureMap
- func init ():
+ function init ():
  1. define perlinNoise as a list of shuffled numbers in [0-15]
  2. define noiseGradient as a list of gradient vectors
 
- func f (x):
+ function f (x):
  1. return perlinNoise[x % 16]
 
- func w (x):
+ function w (x):
  1. get absolute value of x
  2. return 1 - (6*x^5 - 15*x^4 + 10*x^3)
 
- func getPerlinNoise (pHit):
+ function getPerlinNoise (pHit):
  1. define a cube around the point by using floor and ceil functions
  2. noise <- 0
  3. for each corner point at this cube:
@@ -278,7 +278,7 @@ We can manipulate the normal vectors by using the texture value so that the obje
 ## Input
 Normal mapping is applied if the DecalMode field of the TextureMap is replace_normal.
 
-```markdown  
+```xml  
 <Scene>
     <Textures>
         <TextureMap id="1" type="image">
@@ -293,7 +293,7 @@ Each vertex can have its own normal vector. So, I have improved Vertex class by 
 
 The normal space obtained from the texture should be integrated to the object properly so that the texture normal will be suitable for each orientation of the object. In order to achieve it, texture normal should be transformed to the tangent space of the object. Thus, each object has a TBN matrix to transform a vector to the object tangent space.
 
-```markdown
+```algorithm
 Class Vertex
     ...
     vec3 normal
@@ -308,9 +308,9 @@ In normal mapping, a normal vector is extracted from the texture and transformed
 
 It is relatively easier to implement for triangles. The TBN matrix can be computed in preprocessing as given below.
 
-```markdown
+```algorithm
 Class Object
- func init ():
+ function init ():
  1. ... // previous implementations
  2. if the object type is triangle:
  3.         ... // previous implementations
@@ -325,9 +325,9 @@ Class Object
 
 Once a TBN matrix of an object is constructed, it can be used in the normal calculations dynamically, as given below.
 
-```markdown
+```algorithm
 Class Object
- func getNormal (pHit):
+ function getNormal (pHit):
  1. if the object type is triangle:
  2.     if type of textureNormal is "image":
  3.         texCoord <- compute by using the barycentric coefficients
@@ -340,9 +340,9 @@ Class Object
 
 We cannot compute the TBN matrix for spheres in preprocessing since it depends on the hit point. Thus, the TBN matrix of spheres is computed dynamically in the getNormal method of the object as below.
 
-```markdown
+```algorithm
 Class Object
- func getNormal (pHit):
+ function getNormal (pHit):
  1. if the object type is triangle:
  2.     ... // previous implementations
  3. if the object type is sphere:
@@ -394,7 +394,7 @@ Bump mapping is applied if the DecalMode field of the TextureMap is "bump_normal
 
 Note that Bump mapping can be applied on the both of "image" and "perlin" types of TextureMap.
 
-```markdown  
+```xml  
 <Scene>
     <Textures>
         <TextureMap id="1" type="image">
@@ -412,20 +412,20 @@ Note that Bump mapping can be applied on the both of "image" and "perlin" types 
 ## Code Design
 TextureMap should be updated for new fields coming from the Bump mapping.
 
-```markdown
+```algorithm
 Class TextureMap
     ...
     float bumpFactor
 
-    func getBumpGradient (texCoord)
+    function getBumpGradient (texCoord)
 ```
 
 ## Algorithm
 The surface normal of a given surface is perturbed according to a bump map. The perturbed normal is then used instead of the original normal. We perturb the normal by using small steps towards new surface. For this purposes, we should compute the change (gradient) from the original surface to the bump surface.
 
-```markdown
+```algorithm
 Class Object
- func getBumpGradient (texCoord):
+ function getBumpGradient (texCoord):
  1. c0 <- get color from the texCoord
  2. c1 <- get color from the texCoord by increasing i index by 1
  3. c2 <- get color from the texCoord by increasing j index by 1
@@ -439,9 +439,9 @@ Class Object
 
 Once gradient is computed, we can use it in the computation of new normals.
 
-```markdown
+```algorithm
 Class Object
- func getNormal (pHit):
+ function getNormal (pHit):
  1. if the object type is triangle:
  2.     if type of textureNormal is "image":
  3.         texCoord <- compute by using the barycentric coefficients
@@ -477,9 +477,9 @@ I stuck in the image seen on the left for a long time. After ending my implement
 ## Other Improvements (Smooth Shading)
 In this section of the implementing Advance Ray Tracer, I added smooth shading. It takes the weighted average of the normal of the vertices of a triangle. If the vertices of a triangle do not have their own normal vector, it can be computed by taking the average of the triangles shared by the same vertex. It was pretty straightforward when we have the barycentric coefficients as given below.
 
-```markdown
+```algorithm
 Class Object
- func getNormal (pHit):
+ function getNormal (pHit):
  1. if the object type is triangle:
  2.     if smooth shading is active:
  3.         normalPrime <- normalize((1-alpha-beta) * v1.normal \

@@ -7,7 +7,7 @@ This section includes the experiences of implementing object transformations, in
 ## Input
 So, for new features new elements come to the input XML file. Transformations are given under the attribute same name. It can be scaling, translation or rotation. The first two ones are only 3D vectors, but rotation includes angle in degree and rotation vector as 3D vector, respectively. Any kind of object can be transformed via <Transformations> list under this attribute. These transformations are applied in the given order.
 
-```markdown  
+```xml  
 <Scene>
     <Transformations>
         <Translation id="1">0 -6 0</Translation>
@@ -37,7 +37,7 @@ When implementing transformation, I transformed the ray by the inverse transform
 In my first approach, I planned to use the same things for Bounding Boxes. But, in preprocessing, bounding boxes are combined to a new bounding box. Thus, they had to be in the same space to be added properly. Because of this reason, I could not apply the same methods for bounding boxes. In preprocessing, bounding boxes were created from the points of transformed objects and then, in intersection tests, the world ray was directly tested with them.
 Let's see its effects in the following part, implementation process, and why I changed my approach :)
 
-```markdown
+```algorithm
 Class Object
 function intersect(ray, origin):
 1. ray <- inverseLocalMatrix * ray;
@@ -85,7 +85,7 @@ It is more easy to implement and absolutely more faster by avoiding many operati
 ## Input
 For the instancing part, instances are defined using the <MeshInstance> element. These objects are copied from the base mesh object with the given additional feature below.
 
-```markdown  
+```xml  
 <Scene>
     <MeshInstance id="5" baseMeshId="1" resetTransform="true">
         <Material>3</Material>
@@ -114,7 +114,7 @@ Note that models have some sprinkles. This effect will be improved by implementi
 
 The third part, Multisampling is enabled by adding the <NumSamples> field to the Camera element.
 
-```markdown  
+```xml  
 <Scene>
     <NumSamples>N</NumSamples>
 </Scene>
@@ -123,7 +123,7 @@ The third part, Multisampling is enabled by adding the <NumSamples> field to the
 ## Algorithm
 With this feature, multiple small random samples for each pixel will be generated and filtered. I have used the average filter for final pixel color.
 
-```markdown
+```algorithm
 function createScene():
 1. for each camera
 2.     initialize camera
@@ -156,7 +156,7 @@ Multisampling gets more smooth edges as seen in the example image below. Left im
 ## Input
 The final part of this section is the Distribution Ray Tracing. This includes various visual effects with very little extra cost over multisampling. These effects are depth of field, glossy reflections and motion blur. Required elements for this part are given below.
 
-```markdown  
+```xml  
 <Scene>
     <FocusDistance>21</FocusDistance>
     <ApertureSize>1.5</ApertureSize>
@@ -177,7 +177,7 @@ Real cameras have finite aperture as opposed to the pinhole model we have been u
 
 <p align="middle"><img height="400" src="results/hw3/dof.PNG" alt="Figure-1: Depth of Field"></p>
 
-```markdown
+```algorithm
 function createScene():
 1. for each camera
 2.     initialize camera
@@ -200,7 +200,7 @@ function createScene():
 ### Glossy reflections
 This effect is generally used to simulate metallic objects that are not polished. Brushed metal is an example. It allows a reflection ray to be sent at an angle that is somewhat off from the perfect reflection direction. This effect again involves randomness (are taken from the notes of Assoc. Prof. Dr. Ahmet Oğuz Akyüz).
 
-```markdown
+```algorithm
 function reflectionRay(ray, normal, roughness):
 1. ray.dir <- compute reflection ray direction as previous sections
 2. ray_prime <- ray.dir.copy()
@@ -218,7 +218,7 @@ We can compute the Motion Blur effect by generating multiple rays in different t
 
 Only intersection tests of objects and bounding boxes are affected from motion blur as given below. I multiplied the origin of ray with the translation matrix of motion. Because we assumed that motion is done only by translation, ray direction cannot be changed by multiplying any translation matrix.
 
- ```markdown
+ ```algorithm
  function intersect(ray, origin, rayTime):
  1. m <- compute translation matrix at rayTime by motionBlur vector
  2. m <- get inverse of m

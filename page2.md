@@ -7,7 +7,7 @@ In order to see the reflection and refraction effects, we need new material type
 Reflection and refraction are recursive ray tracing features. To stop and yield a result, we need a recursion depth limit (MaxRecursionDepth).
 For these purposes, the input XML files include new attributes. Some of new coming attributes are given below XML file:
 
-```markdown  
+```xml  
 <Scene>
     <MaxRecursionDepth>6</MaxRecursionDepth>
     <Material id="1" type="conductor">
@@ -53,14 +53,14 @@ My code design is changed a little bit with new attributes. Material class gets 
 In reflection and refraction, light can pass through the object, a phenomenon we call transmission and they can reflect light at the same time.
 <p align="left"><img src="results/hw2/example.png"></p>
 
-```markdown
+```algorithm
 function reflection(ray, hit_point, normal):
 1. compute direction of reflected ray by using incident ray and normal vector
 2. compute origin of reflected ray on hit_point with a bias (through normal vector)
 3. call raytracer for reflected ray
 ```
 
-```markdown
+```algorithm
 function refraction(ray, hit_point, normal, refractionInd):
 1.  if cos alpha1 is less than zero:
 2.  compute cos alpha1
@@ -89,7 +89,7 @@ It was sending the min(t1, t2) directly but actually min_t might be negative or 
 
 I changed the intersection test procedure like below and it works successfully, then.
 
-```markdown
+```algorithm
 if t1>ep and t2>ep:
    return min(t1, t2)
 if t1>ep:
@@ -101,7 +101,7 @@ return -1
 
 After that point, one may ask how to know how much light is transmitted vs how much light is reflected? In order to decide it, I used the Fresnel effect. It is a coefficient for reflection and refraction calculations.
 
-```markdown
+```algorithm
 function fresnel(ray, normal):
 1.  if type is mirror:
 2.      return 1
@@ -127,7 +127,7 @@ function fresnel(ray, normal):
 
 Therefore, the final color of hit point can be calculated according to the material type.
 
-```markdown
+```algorithm
 function rayTracer(ray):
 1.  find the closest intersected object and distance to it
 2.  if there is intersection:
@@ -162,7 +162,7 @@ I implemented Bounding Volume Hierarchy (BVH) algorithm to accelerate the tracin
 I added a new class, BoundingBox having its own intersection and union methods and Node class for nodes of the BVH tree. Each node has an object list, two child nodes (low and high), the bounding box and split axis id.
 
 ## Algorithm
-```markdown
+```algorithm
 function constructBVH(object_list, split_axis):
 1. create a new node from object_list
 2. compute its bounding box by using its own objects
