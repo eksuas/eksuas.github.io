@@ -28,7 +28,7 @@ Tone mapping features are given in the new field <Tonemap>. Our ray tracer will 
 ## Code Design
 The Camera class will get new methods as given below.
 
-```python
+```c
 Class Camera
     ...
     bool   tonemap
@@ -40,9 +40,9 @@ Class Camera
 ## Algorithm
 Tone mapping is applied just before writing the float pixel values as a HDR image. I follow the [Reinhard Photographic Tone Mapping algorithm](https://odtuclass.metu.edu.tr/pluginfile.php/413863/mod_resource/content/2/hdr_photographic.pdf) as given below.
 
-```python
+```c
 Class Scene
- def toneMapping (camera):
+ func toneMapping (camera):
  1. lum_in <- convert the pixel_color to luminance
  2. // Equation 1
  3. lum_w_hat <- the summation of the log luminance with small epsilon
@@ -83,7 +83,7 @@ This section includes the implementation of point light, area light, directional
 ## Input
 Lights' features are defined in the XML file as below.
 
-```XML  
+```xml  
 <Scene>
     <Lights>
         <AmbientLight>7.5 7.5 7.5</AmbientLight>
@@ -118,7 +118,7 @@ Lights' features are defined in the XML file as below.
 ## Code Design
 Light class is extended with new features and methods.
 
-```python
+```c
 Class TextureMap
     vec3  position
     vec3  intensity
@@ -138,17 +138,17 @@ Class TextureMap
                     //4:SpotLight
     TextureMap* texture
 
-    def getDirection(pHit, obj_normal)
-    def illuminance(ray, obj_normal, obj_material)
+    func getDirection(pHit, obj_normal)
+    func illuminance(ray, obj_normal, obj_material)
 ```
 
 ## Algorithm
 All lighting features are combined in the light class and will be explained in the coming parts. Before that, let's examine the lighting methods called from our basic shading function as below. Here the difference from the previous sections, shadow can be checked for the lights coming from the infinity such as directional and Spherical directional lights. In these kinds of lights, our light direction will be a normalized vector so that we cannot check the shadow distance in the range of [0-1]. Instead, we can check the shadow by looking at the positive intersection distance. In order to switch this feature, I send a new boolean flag, inf, to the isShadow function.
 
 
-```python
+```c
 Class Scene
- def shading (object, ray, pHit, normal):
+ func shading (object, ray, pHit, normal):
  1. ... // previously
  2. for each light in lights:
  3.     direction <- light.getDirection(pHit, normal)
@@ -164,16 +164,16 @@ Class Scene
 ## 1. Point Light
 Radiance of the point light can be computed by dividing the intensity to the distance between hit point and the light source. After finding the radiance all shading functions can be applied.
 
-```python
+```c
 Class Light
- def getDirection (pHit, normal):
+ func getDirection (pHit, normal):
  1. ... // previously
  2. if type is PointLight:
  3.     light.direction <- light.position - pHit
  4. return light.direction
 
 Class Light
- def illuminance (ray, normal, material):
+ func illuminance (ray, normal, material):
  1. ... // previously
  2. if type is PointLight:
  3.     radiance <- light.intensity / dot(direction, direction)
@@ -184,9 +184,9 @@ Class Light
 ## 2. Area Light
 In the area light, we generate a random point in the plane light. This point will represent the whole light. Thus, we can compute the direction from this point to the hit_point of the object. Note that this direction should be not normalized to compute the shadow correctly.
 
-```python
+```c
 Class Light
- def getDirection (pHit, normal):
+ func getDirection (pHit, normal):
  1. ... // previously
  2. if type is AreaLight:
  3.     x <- generate a number in [-0.5, 0.5]
@@ -198,9 +198,9 @@ Class Light
 
 Once getting the direction of the light, we can compute the declination by looking at the angle between the normal of the light source and the light direction to the object. In order to compute the radiance, we need to multiply the light intensity with the integral of the area. Note that, we choose a point to represent the whole light source.
 
-```python
+```c
 Class Light
- def illuminance (ray, normal, material):
+ func illuminance (ray, normal, material):
  1. ... // previously
  2. if type is AreaLight:
  3.     declination <- dot(normal, normalize(-light.direction))
@@ -217,9 +217,9 @@ Class Light
 ## 3. Directional Light
 Directional lights have a direction with a radiance and they come from infinity. Thus, we just send its direction in the getDirection method.
 
-```python
+```c
 Class Light
- def getDirection (pHit, normal):
+ func getDirection (pHit, normal):
  1. ... // previously
  2. if type is DirectionalLight:
  3.     return light.direction
@@ -227,9 +227,9 @@ Class Light
 
 Similarly, we don't need to compute the radiance. Instead, we just use the given radiance of the light in the shading.
 
-```python
+```c
 Class Light
- def illuminance (ray, normal, material):
+ func illuminance (ray, normal, material):
  1. ... // previously
  2. if type is DirectionalLight:
  3.     radiance <- light.radiance
@@ -240,9 +240,9 @@ Class Light
 ## 4. Spherical Directional (Environment) Light
 In spherical directional light, we generate a vector in the upper hemisphere. This vector will represent the light direction.
 
-```python
+```c
 Class Light
- def getDirection (pHit, normal):
+ func getDirection (pHit, normal):
  1. ... // previously
  2. while true:
  3.     if type is SphericalDirectionalLight:
@@ -258,9 +258,9 @@ Class Light
 
 We have used the light direction to get the radiance value from the lighting texture. Note that this radiance is just from the one sample and should be generalized (i.e. getting the expected value of the radiance) by multiplying the probability as below.
 
-```python
+```c
 Class Light
- def illuminance (ray, normal, material):
+ func illuminance (ray, normal, material):
  1. ... // previously
  2. if type is SphericalDirectionalLight:
  3.     texCoord.s <- 0.5 - atan2(direction.z, direction.x) * (1 / 2 PI)
@@ -273,9 +273,9 @@ Class Light
 ## 5. Spot Light
 Spot light has its own direction as given below so that we can just send its direction in the getDirection method.
 
-```python
+```c
 Class Light
- def getDirection (pHit, normal):
+ func getDirection (pHit, normal):
  1. ... // previously
  2. if type is SpotLight:
  3.     return light.direction
@@ -283,9 +283,9 @@ Class Light
 
 Spot lights have different radiance in three conditions. The radiance will be the same as the radiance of point light when the angle between the direction from the object and the original direction of the spotlight is less than half of the falloff angle. It decreases its radiance outside of this angle until half of the coverage angle. Finally, outside of the coverage angle, the radiance will be zero.
 
-```python
+```c
 Class Light
- def illuminance (ray, normal, material):
+ func illuminance (ray, normal, material):
  1. ... // previously
  2. if type is SpotLight:
  3.     dir1 <- normalize(light.spotDirection)
