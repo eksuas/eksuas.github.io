@@ -145,8 +145,7 @@ Class TextureMap
 ## Algorithm
 All lighting features are combined in the light class and will be explained in the coming parts. Before that, let's examine the lighting methods called from our basic shading function as below. Here the difference from the previous sections, shadow can be checked for the lights coming from the infinity such as directional and Spherical directional lights. In these kinds of lights, our light direction will be a normalized vector so that we cannot check the shadow distance in the range of [0-1]. Instead, we can check the shadow by looking at the positive intersection distance. In order to switch this feature, I send a new boolean flag, inf, to the isShadow function.
 
-
-```markdown
+<code>
 Class Scene
  func shading (object, ray, pHit, normal):
  1. ... // previously
@@ -159,7 +158,7 @@ Class Scene
  8.     if (!shadow):
  9.         color <- color + lights.illuminance(ray, normal, material)
 10. return color
-```
+</code>
 
 ## 1. Point Light
 Radiance of the point light can be computed by dividing the intensity to the distance between hit point and the light source. After finding the radiance all shading functions can be applied.
