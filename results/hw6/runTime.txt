@@ -1,0 +1,18 @@
+./raytracer examples/killeroo_blinnphong.xml 
+XML file is parsed in 0 sec
+Maximum BVH depth is 15
+Preprocessing is finished in 0 sec
+ToneMapping is performing
+ToneMapping is performing
+Scene is created in 227 sec
+
+./raytracer examples/killeroo_torrancesparrow.xml 
+XML file is parsed in 1 sec
+Maximum BVH depth is 15
+Preprocessing is finished in 0 sec
+ToneMapping is performing
+ToneMapping is performing
+Scene is created in 222 sec
+
+
+
