@@ -58,7 +58,7 @@ New classes "TextureMap" and "Image" are implemented. These include the all new 
 
 In addition, I changed my vertex approach, and created new class including all information related to the vertex.
 
-```markdown
+```algorithm
 Class Vertex
     vec3 pos
     vec2 texCoord
