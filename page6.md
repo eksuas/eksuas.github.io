@@ -137,8 +137,6 @@ Class Light
 
 In the modified version, we can also apply a normalization if it is enabled in the xml file. The normalization is given below.
 
-EXPLAIN THE REASON BEHIND THAT
-
 ```algorithm
 Class Light
  function illuminance(ray, n, material):
@@ -152,8 +150,22 @@ Class Light
 
 ## 5. Torrance-Sparrow
 
+Torrance-Sparrow
 
-## Implementation Process
+```algorithm
+Class Light
+ function illuminance(ray, n, material):
+ 1. ... // previously
+ 2. brdf <- material.brdf
+ 3. if brdf.type is TorranceSparrow:
+ 4.     G <- min(1, min(2 * dot(n, w_h) / dot(w_o, w_h)) * min(dot(n, w_o), dot(n, w_i)))
+ 5.     D <- (brdf.exponent + 2) / (2 * PI) * pow(dot(w_h, n), brdf.exponent)
+ 6.     F <- material.fresnel(w_o, n)
+ 7.     if brdf.kdfresnel:
+ 8.         f_wi_wo <- (kd / PI) * (1 - F) + ks * F * G * D / (4 * dot(n, w_o) * dot(n, w_i))
+ 5.     L_r = f_wi_wo * dot(n, w_i) * L_i
+ 6. return L_r
+```
 
 
 ## Final Results
