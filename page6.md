@@ -8,7 +8,7 @@ This section includes the experiences of implementing the BRDF with Phong, Blinn
 ## Input
 BRDFs are defined in a new section in the XML files as below. They are five different types of BRDF: Phong, Blinn-Phong, modified Phong, modified Blinn-Phong and Torrance-Sparrow. The modified BRDFs can be normalized or not with a field <normalized="true">. The exponent is given as <Exponent>. For the Torrance-Sparrow model the "Exponent'' parameter defines the exponent of the Blinn microfacet distribution. Finally, <kdfresnel="true"> field indicates the fraction of the diffuse light that is reflected must be computed from the Fresnel reflection. We will multiply the diffuse component by 1 - F (the Fresnel reflection) if this attribute is true.
 
-Note that the BRDF is specified in the material with its identification number as a new field BRDF=<id>.
+Note that the BRDF is specified in the material with its identification number as a new field BRDF="id".
 
 ```xml  
 <Scene>
@@ -59,7 +59,6 @@ Class Material
 ```
 
 ## Algorithm
-EXPLAIN BRDF shortly
 
 Before starting coding, let's define our viewer vector (reverse ray direction), incident light vector and half vector as w_o, w_i and w_h, respectively.
 
@@ -93,8 +92,6 @@ Class Light
 ```
 
 In the modified version, we can also apply a normalization if it is enabled in the xml file. The normalization is given below.
-
-EXPLAIN THE REASON BEHIND THAT
 
 ```algorithm
 Class Light
@@ -187,6 +184,11 @@ Let's look at the final results of my implementation after all improving.
 <p float="left">
   <img src="results/hw6/brdf_phong_modified_normalized.png" width="410" />
   <img src="results/hw6/brdf_blinnphong_modified_normalized.png" width="410" />
+</p>
+
+### brdf_torrancesparrow
+<p float="left">
+  <img src="results/hw6/brdf_torrancesparrow.png" width="410" />
 </p>
 
 ### killeroo_blinnphong.xml
