@@ -157,7 +157,7 @@ In my first implementation, I used the sampled light direction directly. However
 
 #### cornellbox_jaroslav_glossy_sphere (left: ellipsoid light, right: sphere light)
 <p float="left">
-  <img src="results/hw7/cornellbox_jaroslav_glossy_area_ellipsoid.png.png" width="410" />
+  <img src="results/hw7/cornellbox_jaroslav_glossy_area_ellipsoid.png" width="410" />
   <img src="results/hw7/cornellbox_jaroslav_glossy_area_sphere.png" width="410" />
 </p>
 
