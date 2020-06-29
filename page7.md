@@ -141,28 +141,27 @@ In my first implementation, I used the sampled light direction directly. However
   <img src="results/hw7/cornellbox_jaroslav_glossy_area_sphere.png" width="410" />
 </p>
 
-## Final Results
-Let's look at the final results of my implementation after all improving.
+## Results
 
-### cornellbox_jaroslav_diffuse (left: no object light source, right: object light source)
+#### cornellbox_jaroslav_diffuse (left: no object light source, right: object light source)
 <p float="left">
   <img src="results/hw7/cornellbox_jaroslav_diffuse.png" width="410" />
   <img src="results/hw7/cornellbox_jaroslav_diffuse_area.png" width="410" />
 </p>
 
-### cornellbox_jaroslav_glossy (left: no object light source, right: object light source)
+#### cornellbox_jaroslav_glossy (left: no object light source, right: object light source)
 <p float="left">
   <img src="results/hw7/cornellbox_jaroslav_glossy.png" width="410" />
   <img src="results/hw7/cornellbox_jaroslav_glossy_area.png" width="410" />
 </p>
 
-### cornellbox_jaroslav_glossy_sphere (left: ellipsoid light, right: sphere light)
+#### cornellbox_jaroslav_glossy_sphere (left: ellipsoid light, right: sphere light)
 <p float="left">
   <img src="results/hw7/cornellbox_jaroslav_glossy_ellipsoid.png" width="410" />
   <img src="results/hw7/cornellbox_jaroslav_glossy_sphere.png" width="410" />
 </p>
 
-### cornellbox_jaroslav_glossy_small
+#### cornellbox_jaroslav_glossy_small
 <p float="left">
   <img src="results/hw7/cornellbox_jaroslav_glossy_small.png" width="410" />
 </p>
@@ -368,34 +367,34 @@ Class Scene
 24. return color
 ```
 
-## Final Results
+## Results
 Let's look at the final results of my implementation after all improving.
 
-### diffuse object (left: original, right: with importance sampling)
+#### diffuse object (left: original, right: with importance sampling)
 <p float="left">
   <img src="results/hw7/diffuse.png" width="410" />
   <img src="results/hw7/diffuse_importance.png" width="410" />
 </p>
 
-### diffuse object with Russian Roulette stopping (left: original, right: with importance sampling)
+#### diffuse object with Russian Roulette stopping (left: original, right: with importance sampling)
 <p float="left">
   <img src="results/hw7/diffuse_russian.png" width="410" />
   <img src="results/hw7/diffuse_importance_russian.png" width="410" />
 </p>
 
-### diffuse object with Next Event Estimation (left: original, right: with importance sampling)
+#### diffuse object with Next Event Estimation (left: original, right: with importance sampling)
 <p float="left">
   <img src="results/hw7/diffuse_next.png" width="410" />
   <img src="results/hw7/diffuse_next_importance.png" width="410" />
 </p>
 
-### diffuse object with Next Event Estimation and Russian Roulette stopping (left: original, right: with importance sampling)
+#### diffuse object with Next Event Estimation and Russian Roulette stopping (left: original, right: with importance sampling)
 <p float="left">
   <img src="results/hw7/diffuse_next_russian.png" width="410" />
   <img src="results/hw7/diffuse_next_importance_russian.png" width="410" />
 </p>
 
-### veach-ajar.xml
+#### veach-ajar.xml
 <p float="left">
   <img src="results/hw7/veach-ajar.png" />
 </p>
@@ -406,7 +405,7 @@ Preprocessing is finished in 0 sec
 Scene is created in 227 sec
 ```
 
-### sponza.xml
+#### sponza.xml
 <p float="left">
   <img src="results/hw7/sponza.png" />
 </p>
