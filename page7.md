@@ -134,12 +134,12 @@ Class Object
 ```
 
 ## Implementation Process
-In my first implementation, I used the sampled light direction directly. However, they produced smaller shadows because they are unit vectors instead of a vector from the hit point to the light source. This result can be seen in the left. In order to fix that problem, we can find the distance between the intersection point and light source and multiply the unit light vector with this sample to be used in the shadow calculation. The fixed result can be seen on the right.
-
 <p float="left">
   <img src="results/hw7/process/cornellbox_jaroslav_glossy_area_sphere_light vertorlarim unit olduğu için shadow düzgün oluşmadı.png" width="410" />
   <img src="results/hw7/cornellbox_jaroslav_glossy_area_sphere.png" width="410" />
 </p>
+
+In my first implementation, I used the sampled light direction directly. However, they produced smaller shadows because they are unit vectors instead of a vector from the hit point to the light source. This result can be seen in the left. In order to fix that problem, we can find the distance between the intersection point and light source and multiply the unit light vector with this sample to be used in the shadow calculation. The fixed result can be seen on the right.
 
 ## Results
 
