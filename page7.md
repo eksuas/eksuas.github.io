@@ -157,13 +157,13 @@ In my first implementation, I used the sampled light direction directly. However
 
 #### cornellbox_jaroslav_glossy_sphere (left: ellipsoid light, right: sphere light)
 <p float="left">
-  <img src="results/hw7/cornellbox_jaroslav_glossy_ellipsoid.png" width="410" />
-  <img src="results/hw7/cornellbox_jaroslav_glossy_sphere.png" width="410" />
+  <img src="results/hw7/cornellbox_jaroslav_glossy_area_ellipsoid.png.png" width="410" />
+  <img src="results/hw7/cornellbox_jaroslav_glossy_area_sphere.png" width="410" />
 </p>
 
 #### cornellbox_jaroslav_glossy_small
 <p float="left">
-  <img src="results/hw7/cornellbox_jaroslav_glossy_small.png" width="410" />
+  <img src="results/hw7/cornellbox_jaroslav_glossy_area_small.png" width="410" />
 </p>
 
 
@@ -242,7 +242,7 @@ Class Object
  6. vec3 w_i <- sin(theta) * cos(phi) * u + sin(theta) * sin(phi) * v + cos(theta) * w
  7. return w_i
 ```
-
+The result of diffuse pure Path Tracing:
 <p float="left">
   <img src="results/hw7/diffuse.png" width="410" />
 </p>
@@ -276,6 +276,8 @@ Class Scene
 12.     color <- color + material.illuminance(ray, w_i, normal, radiance) * p_w
 13. return color
 ```
+
+The left is pure Path Tracing while the right is improved with Next Event Estimation.
 
 <p float="left">
   <img src="results/hw7/diffuse.png" width="410" />
@@ -313,6 +315,8 @@ Class Object
  6. vec3 w_i <- sin(theta) * cos(phi) * u + sin(theta) * sin(phi) * v + cos(theta) * w
  7. return w_i
 ```
+
+The left is pure Path Tracing while the right is improved with Importance Sampling.
 
 <p float="left">
   <img src="results/hw7/diffuse.png" width="410" />
