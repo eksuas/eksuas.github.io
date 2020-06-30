@@ -406,20 +406,5 @@ Let's look at the final results of my implementation after all improving.
 XML file is parsed in 0 sec
 Maximum BVH depth is 15
 Preprocessing is finished in 0 sec
-<<<<<<< HEAD
 Scene is created in around 15 hours with 640 samples
-=======
-Scene is created in 227 sec
-```
-
-#### sponza.xml
-<p float="left">
-  <img src="results/hw7/sponza.png" />
-</p>
-```markdown
-XML file is parsed in 1 sec
-Maximum BVH depth is 15
-Preprocessing is finished in 0 sec
-Scene is created in 222 sec
->>>>>>> 5d0e51bb33289aaaff6644ee31136f5bab109951
 ```
