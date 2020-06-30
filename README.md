@@ -16,6 +16,7 @@ Sections:
 
 5. [HDR Imaging and Advanced Lighting](page5.md) includes the experiences of implementing the Advanced Lighting and HDR Imaging support.
 
+6. [BRDF with Phong, Blinn-Phong and Torrance-Sparrow Reflections](page6.md) includes the experiences of implementing the BRDF with Phong, Blinn-Phong and Torrance-Sparrow Reflections.
 
 My development environment is Ubuntu18.4
 
