@@ -134,37 +134,36 @@ Class Object
 ```
 
 ## Implementation Process
-In my first implementation, I used the sampled light direction directly. However, they produced smaller shadows because they are unit vectors instead of a vector from the hit point to the light source. This result can be seen in the left. In order to fix that problem, we can find the distance between the intersection point and light source and multiply the unit light vector with this sample to be used in the shadow calculation. The fixed result can be seen on the right.
-
 <p float="left">
   <img src="results/hw7/process/cornellbox_jaroslav_glossy_area_sphere_light vertorlarim unit olduğu için shadow düzgün oluşmadı.png" width="410" />
   <img src="results/hw7/cornellbox_jaroslav_glossy_area_sphere.png" width="410" />
 </p>
 
-## Final Results
-Let's look at the final results of my implementation after all improving.
+In my first implementation, I used the sampled light direction directly. However, they produced smaller shadows because they are unit vectors instead of a vector from the hit point to the light source. This result can be seen in the left. In order to fix that problem, we can find the distance between the intersection point and light source and multiply the unit light vector with this sample to be used in the shadow calculation. The fixed result can be seen on the right.
 
-### cornellbox_jaroslav_diffuse (left: no object light source, right: object light source)
+## Results
+
+#### cornellbox_jaroslav_diffuse (left: no object light source, right: object light source)
 <p float="left">
   <img src="results/hw7/cornellbox_jaroslav_diffuse.png" width="410" />
   <img src="results/hw7/cornellbox_jaroslav_diffuse_area.png" width="410" />
 </p>
 
-### cornellbox_jaroslav_glossy (left: no object light source, right: object light source)
+#### cornellbox_jaroslav_glossy (left: no object light source, right: object light source)
 <p float="left">
   <img src="results/hw7/cornellbox_jaroslav_glossy.png" width="410" />
   <img src="results/hw7/cornellbox_jaroslav_glossy_area.png" width="410" />
 </p>
 
-### cornellbox_jaroslav_glossy_sphere (left: ellipsoid light, right: sphere light)
+#### cornellbox_jaroslav_glossy_sphere (left: ellipsoid light, right: sphere light)
 <p float="left">
-  <img src="results/hw7/cornellbox_jaroslav_glossy_ellipsoid.png" width="410" />
-  <img src="results/hw7/cornellbox_jaroslav_glossy_sphere.png" width="410" />
+  <img src="results/hw7/cornellbox_jaroslav_glossy_area_ellipsoid.png" width="410" />
+  <img src="results/hw7/cornellbox_jaroslav_glossy_area_sphere.png" width="410" />
 </p>
 
-### cornellbox_jaroslav_glossy_small
+#### cornellbox_jaroslav_glossy_small
 <p float="left">
-  <img src="results/hw7/cornellbox_jaroslav_glossy_small.png" width="410" />
+  <img src="results/hw7/cornellbox_jaroslav_glossy_area_small.png" width="410" />
 </p>
 
 
@@ -243,7 +242,7 @@ Class Object
  6. vec3 w_i <- sin(theta) * cos(phi) * u + sin(theta) * sin(phi) * v + cos(theta) * w
  7. return w_i
 ```
-
+The result of diffuse pure Path Tracing:
 <p float="left">
   <img src="results/hw7/diffuse.png" width="410" />
 </p>
@@ -277,6 +276,8 @@ Class Scene
 12.     color <- color + material.illuminance(ray, w_i, normal, radiance) * p_w
 13. return color
 ```
+
+The left is pure Path Tracing while the right is improved with Next Event Estimation.
 
 <p float="left">
   <img src="results/hw7/diffuse.png" width="410" />
@@ -314,6 +315,8 @@ Class Object
  6. vec3 w_i <- sin(theta) * cos(phi) * u + sin(theta) * sin(phi) * v + cos(theta) * w
  7. return w_i
 ```
+
+The left is pure Path Tracing while the right is improved with Importance Sampling.
 
 <p float="left">
   <img src="results/hw7/diffuse.png" width="410" />
@@ -368,34 +371,34 @@ Class Scene
 24. return color
 ```
 
-## Final Results
+## Results
 Let's look at the final results of my implementation after all improving.
 
-### diffuse object (left: original, right: with importance sampling)
+#### diffuse object (left: original, right: with importance sampling)
 <p float="left">
   <img src="results/hw7/diffuse.png" width="410" />
   <img src="results/hw7/diffuse_importance.png" width="410" />
 </p>
 
-### diffuse object with Russian Roulette stopping (left: original, right: with importance sampling)
+#### diffuse object with Russian Roulette stopping (left: original, right: with importance sampling)
 <p float="left">
   <img src="results/hw7/diffuse_russian.png" width="410" />
   <img src="results/hw7/diffuse_importance_russian.png" width="410" />
 </p>
 
-### diffuse object with Next Event Estimation (left: original, right: with importance sampling)
+#### diffuse object with Next Event Estimation (left: original, right: with importance sampling)
 <p float="left">
   <img src="results/hw7/diffuse_next.png" width="410" />
   <img src="results/hw7/diffuse_next_importance.png" width="410" />
 </p>
 
-### diffuse object with Next Event Estimation and Russian Roulette stopping (left: original, right: with importance sampling)
+#### diffuse object with Next Event Estimation and Russian Roulette stopping (left: original, right: with importance sampling)
 <p float="left">
   <img src="results/hw7/diffuse_next_russian.png" width="410" />
   <img src="results/hw7/diffuse_next_importance_russian.png" width="410" />
 </p>
 
-### veach-ajar.xml
+#### veach-ajar.xml
 <p float="left">
   <img src="results/hw7/veach-ajar.png" />
 </p>
@@ -403,5 +406,20 @@ Let's look at the final results of my implementation after all improving.
 XML file is parsed in 0 sec
 Maximum BVH depth is 15
 Preprocessing is finished in 0 sec
+<<<<<<< HEAD
 Scene is created in around 15 hours with 640 samples
+=======
+Scene is created in 227 sec
+```
+
+#### sponza.xml
+<p float="left">
+  <img src="results/hw7/sponza.png" />
+</p>
+```markdown
+XML file is parsed in 1 sec
+Maximum BVH depth is 15
+Preprocessing is finished in 0 sec
+Scene is created in 222 sec
+>>>>>>> 5d0e51bb33289aaaff6644ee31136f5bab109951
 ```
