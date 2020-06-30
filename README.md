@@ -18,6 +18,11 @@ Sections:
 
 6. [BRDF with Phong, Blinn-Phong and Torrance-Sparrow Reflections](page6.md) includes the experiences of implementing the BRDF with Phong, Blinn-Phong and Torrance-Sparrow Reflections.
 
+7. [Direct Lighting and Path Tracing](page7.md) includes the experiences of implementing the Direct Lighting and Path Tracing.
+
+7. [Term Project](project.md) includes the Glass of Water scene by aXel.
+
+
 My development environment is Ubuntu18.4
 
 Required Libraries are libpng-dev, libtinyxml-dev and libglm-dev.
