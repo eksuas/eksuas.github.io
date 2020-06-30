@@ -374,33 +374,57 @@ Class Scene
 ## Results
 Let's look at the final results of my implementation after all improving.
 
-#### diffuse object (left: original, right: with importance sampling)
+#### Diffuse object (left: original, right: with importance sampling)
 <p float="left">
   <img src="results/hw7/diffuse.png" width="410" />
   <img src="results/hw7/diffuse_importance.png" width="410" />
 </p>
 
-#### diffuse object with Russian Roulette stopping (left: original, right: with importance sampling)
+#### Diffuse object with Russian Roulette stopping (left: original, right: with importance sampling)
 <p float="left">
   <img src="results/hw7/diffuse_russian.png" width="410" />
   <img src="results/hw7/diffuse_importance_russian.png" width="410" />
 </p>
 
-#### diffuse object with Next Event Estimation (left: original, right: with importance sampling)
+#### Diffuse object with Next Event Estimation (left: original, right: with importance sampling)
 <p float="left">
   <img src="results/hw7/diffuse_next.png" width="410" />
   <img src="results/hw7/diffuse_next_importance.png" width="410" />
 </p>
 
-#### diffuse object with Next Event Estimation and Russian Roulette stopping (left: original, right: with importance sampling)
+#### Diffuse object with Next Event Estimation and Russian Roulette stopping (left: original, right: with importance sampling)
 <p float="left">
   <img src="results/hw7/diffuse_next_russian.png" width="410" />
   <img src="results/hw7/diffuse_next_importance_russian.png" width="410" />
 </p>
 
-#### veach-ajar.xml
+#### Glass object (left: original, right: with importance sampling)
 <p float="left">
-  <img src="results/hw7/veach-ajar.png" />
+  <img src="results/hw7/glass.png" width="410" />
+  <img src="results/hw7/glass_importance.png" width="410" />
+</p>
+
+#### Glass object with Russian Roulette stopping (left: original, right: with importance sampling)
+<p float="left">
+  <img src="results/hw7/glass_russian.png" width="410" />
+  <img src="results/hw7/glass_importance_russian.png" width="410" />
+</p>
+
+#### Glass object with Next Event Estimation (left: original, right: with importance sampling)
+<p float="left">
+  <img src="results/hw7/glass_next.png" width="410" />
+  <img src="results/hw7/glass_next_importance.png" width="410" />
+</p>
+
+#### Glass object with Next Event Estimation and Russian Roulette stopping (left: original, right: with importance sampling)
+<p float="left">
+  <img src="results/hw7/glass_next_russian.png" width="410" />
+  <img src="results/hw7/glass_next_importance_russian.png" width="410" />
+</p>
+
+#### VeachAjar Scene
+<p float="left">
+  <img src="results/hw7/VeachAjar.png" />
 </p>
 ```markdown
 XML file is parsed in 0 sec
