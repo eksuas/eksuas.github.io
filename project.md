@@ -12,52 +12,52 @@ As seen, it includes glass types objects. Unfortunately, I could not find the ga
 <Scene>
 	<BackgroundColor>0 0 0</BackgroundColor>
 
-    <MaxRecursionDepth>6</MaxRecursionDepth>
+	<MaxRecursionDepth>6</MaxRecursionDepth>
 
 	<Cameras>
-        <Camera id="1" type="lookAt">
+		<Camera id="1" type="lookAt">
 			<Position>-0.0893585 2.69412 25.6726</Position>
-            <Gaze>0 0 1</Gaze>
-            <Up>0 1 0</Up>
-            <FovY>20.114292</FovY>
-            <NearDistance>1.7321</NearDistance>
-            <ImageResolution>1280 720</ImageResolution>
-            <ImageName>glass-of-water.png</ImageName>
-            <NumSamples>16</NumSamples>
+			<Gaze>0 0 1</Gaze>
+			<Up>0 1 0</Up>
+			<FovY>20.114292</FovY>
+			<NearDistance>1.7321</NearDistance>
+			<ImageResolution>1280 720</ImageResolution>
+			<ImageName>glass-of-water.png</ImageName>
+			<NumSamples>16</NumSamples>
 			<Tonemap>
 				<TMO>Photographic</TMO>
-                <TMOOptions>0.18 0</TMOOptions>
-                <Saturation>1.0</Saturation>
-                <Gamma>2.2</Gamma>
-            </Tonemap>
+				<TMOOptions>0.18 0</TMOOptions>
+				<Saturation>1.0</Saturation>
+				<Gamma>2.2</Gamma>
+			</Tonemap>
 			<Renderer>PathTracing</Renderer>
-            <RendererParams>NextEventEstimation ImportanceSampling</RendererParams>
-        </Camera>
-    </Cameras>
+			<RendererParams>NextEventEstimation ImportanceSampling</RendererParams>
+		</Camera>
+	</Cameras>
 
 	<BRDFs>
-        <ModifiedPhong id="1" normalized="true">
-            <Exponent>90</Exponent>
-        </ModifiedPhong>
-        <ModifiedPhong id="2" normalized="true">
-            <Exponent>30</Exponent>
-        </ModifiedPhong>
-        <ModifiedPhong id="3" normalized="true">
-            <Exponent>10</Exponent>
-        </ModifiedPhong>
-    </BRDFs>
+		<ModifiedPhong id="1" normalized="true">
+			<Exponent>90</Exponent>
+		</ModifiedPhong>
+		<ModifiedPhong id="2" normalized="true">
+			<Exponent>30</Exponent>
+		</ModifiedPhong>
+		<ModifiedPhong id="3" normalized="true">
+			<Exponent>10</Exponent>
+		</ModifiedPhong>
+	</BRDFs>
 
 	<Materials>
-        <Material id="1" type="conductor" BRDF="3" degamma="true">
-            <AmbientReflectance>1 1 1</AmbientReflectance>
-            <DiffuseReflectance>4.277513 3.513154 2.761126</DiffuseReflectance>
-            <SpecularReflectance>0.578596, 0.578596, 0.578596</SpecularReflectance>
-            <PhongExponent>1</PhongExponent>
-            <MirrorReflectance>3.491184 2.889358 3.111696</MirrorReflectance>
-            <RefractionIndex>0.135</RefractionIndex>
-            <AbsorptionIndex>3.985</AbsorptionIndex>
-            <Roughness>0.1</Roughness>
-        </Material>
+		<Material id="1" type="conductor" BRDF="3" degamma="true">
+			<AmbientReflectance>1 1 1</AmbientReflectance>
+			<DiffuseReflectance>4.277513 3.513154 2.761126</DiffuseReflectance>
+			<SpecularReflectance>0.578596, 0.578596, 0.578596</SpecularReflectance>
+			<PhongExponent>1</PhongExponent>
+			<MirrorReflectance>3.491184 2.889358 3.111696</MirrorReflectance>
+			<RefractionIndex>0.135</RefractionIndex>
+			<AbsorptionIndex>3.985</AbsorptionIndex>
+			<Roughness>0.1</Roughness>
+		</Material>
 		<Material id="2" type="conductor" BRDF="3" degamma="true">
 			<AmbientReflectance>1 1 1</AmbientReflectance>
 			<DiffuseReflectance>1.657460 0.880369 0.521229</DiffuseReflectance>
@@ -71,68 +71,68 @@ As seen, it includes glass types objects. Unfortunately, I could not find the ga
 
 		<Material id="3" type="dielectric" BRDF="2" degamma="true">
 			<AmbientReflectance>1 1 1</AmbientReflectance>
-            <DiffuseReflectance>0 0 0</DiffuseReflectance>
-            <SpecularReflectance>0 0 0</SpecularReflectance>
-            <AbsorptionCoefficient>0.01 0.01 0.01</AbsorptionCoefficient>
+			<DiffuseReflectance>0 0 0</DiffuseReflectance>
+			<SpecularReflectance>0 0 0</SpecularReflectance>
+			<AbsorptionCoefficient>0.01 0.01 0.01</AbsorptionCoefficient>
 			<RefractionIndex>1.330000</RefractionIndex>
-        </Material>
+		</Material>
 		<Material id="4" type="dielectric" BRDF="2" degamma="true">
 			<AmbientReflectance>1 1 1</AmbientReflectance>
-            <DiffuseReflectance>0 0 0</DiffuseReflectance>
-            <SpecularReflectance>0 0 0</SpecularReflectance>
-            <AbsorptionCoefficient>0.01 0.01 0.01</AbsorptionCoefficient>
+			<DiffuseReflectance>0 0 0</DiffuseReflectance>
+			<SpecularReflectance>0 0 0</SpecularReflectance>
+			<AbsorptionCoefficient>0.01 0.01 0.01</AbsorptionCoefficient>
 			<RefractionIndex>1.310000</RefractionIndex>
 		</Material>
 		<Material id="5" type="dielectric" BRDF="2" degamma="true">
 			<AmbientReflectance>1 1 1</AmbientReflectance>
-            <DiffuseReflectance>0 0 0</DiffuseReflectance>
-            <SpecularReflectance>0 0 0</SpecularReflectance>
-            <AbsorptionCoefficient>0.01 0.01 0.01</AbsorptionCoefficient>
+			<DiffuseReflectance>0 0 0</DiffuseReflectance>
+			<SpecularReflectance>0 0 0</SpecularReflectance>
+			<AbsorptionCoefficient>0.01 0.01 0.01</AbsorptionCoefficient>
 			<RefractionIndex>1.500000</RefractionIndex>
 		</Material>
 		<Material id="6" type="dielectric" BRDF="2" degamma="true">
 			<AmbientReflectance>1 1 1</AmbientReflectance>
-            <DiffuseReflectance>0 0 0</DiffuseReflectance>
-            <SpecularReflectance>0 0 0</SpecularReflectance>
-            <AbsorptionCoefficient>0.01 0.01 0.01</AbsorptionCoefficient>
+			<DiffuseReflectance>0 0 0</DiffuseReflectance>
+			<SpecularReflectance>0 0 0</SpecularReflectance>
+			<AbsorptionCoefficient>0.01 0.01 0.01</AbsorptionCoefficient>
 			<RefractionIndex>0.763000</RefractionIndex>
 		</Material>
 
 		<Material id="7" BRDF="1" degamma="true">
 			<AmbientReflectance>1 1 1</AmbientReflectance>
-            <DiffuseReflectance>0 0 0</DiffuseReflectance>
-            <SpecularReflectance>0 0 0</SpecularReflectance>
+			<DiffuseReflectance>0 0 0</DiffuseReflectance>
+			<SpecularReflectance>0 0 0</SpecularReflectance>
 			<PhongExponent>1</PhongExponent>
 		</Material>
-    </Materials>
+	</Materials>
 
 	<VertexData>
 		-5.03848 14.3022 22.968
 		4.96152 14.3022 22.968
 		4.96152 6.65957 29.417
 		-5.03848 6.65957 29.417
-    </VertexData>
+	</VertexData>
 
 	<Transformations>
-        <Composite id="1">5 4.86887e-007 1.77975e-007 -0.0384822 4.86887e-007 -3.82133 -3.22451 10.4809 -1.77975e-007 3.22451 -3.82133 26.1925 0 0 0 1</Composite>
-    </Transformations>
+		<Composite id="1">5 4.86887e-007 1.77975e-007 -0.0384822 4.86887e-007 -3.82133 -3.22451 10.4809 -1.77975e-007 3.22451 -3.82133 26.1925 0 0 0 1</Composite>
+	</Transformations>
 
 	<TexCoordData>
-        0 0
+		0 0
 		1 0
 		1 1
 		0 1
-    </TexCoordData>
+	</TexCoordData>
 
 	<Objects>
-        <Mesh id="1">
-            <Material>3</Material>
-            <Faces plyFile="models/Mesh008.ply" />
-        </Mesh>
+		<Mesh id="1">
+			<Material>3</Material>
+			<Faces plyFile="models/Mesh008.ply" />
+		</Mesh>
 		<Mesh id="2">
-            <Material>3</Material>
-            <Faces plyFile="models/Mesh005.ply" />
-        </Mesh>
+			<Material>3</Material>
+			<Faces plyFile="models/Mesh005.ply" />
+		</Mesh>
 		<Mesh id="3">
 			<Material>4</Material>
 			<Faces plyFile="models/Mesh004.ply" />
@@ -191,17 +191,16 @@ As seen, it includes glass types objects. Unfortunately, I could not find the ga
 		</Mesh>
 
 		<LightMesh id="17">
-            <Material>7</Material>
-            <Transformations>c1</Transformations>
-            <Faces>
-                 0 1 2
+			<Material>7</Material>
+			<Transformations>c1</Transformations>
+			<Faces>
+				 0 1 2
 				 0 2 3
-            </Faces>
+			</Faces>
 			<Radiance>15.9155, 27.0563, 31.831</Radiance>
-        </LightMesh>
+		</LightMesh>
 
 	</Objects>
 
 </Scene>
-
 ```
